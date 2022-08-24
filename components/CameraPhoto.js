@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from "react";
 
 import {
   Image,
@@ -7,90 +7,131 @@ import {
   View,
   TouchableOpacity,
   Platform,
-  Button
-} from 'react-native';
+  Button,
+} from "react-native";
 
-import * as MediaLibrary from 'expo-media-library'
-import { Camera, CameraType } from 'expo-camera'
+import * as MediaLibrary from "expo-media-library";
+
+import * as ImageManipulator from "expo-image-manipulator";
+import { Camera, CameraType } from "expo-camera";
+import axios from "axios";
 
 export default function CameraPhoto() {
-
-  const [hasCameraPermission, setHasCameraPermission] = useState(null)
+  const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [cameraImage, setCameraImage] = useState(null);
   //set front camera vs back camera
-  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back)
-  const [flash, setFlash] = useState(Camera.Constants.FlashMode.off)
-  const cameraRef = useRef(null)
-  
-  
+  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
+  const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
+  const cameraRef = useRef(null);
+
+  const [results, setResults] = useState();
+
   useEffect(() => {
     (async () => {
       MediaLibrary.requestPermissionsAsync();
       const permissionResult = await Camera.requestCameraPermissionsAsync();
-      setHasCameraPermission(permissionResult.status === 'granted')
+      setHasCameraPermission(permissionResult.status === "granted");
     })();
-  }, [])
+  }, []);
 
   const takePicture = async () => {
     if (cameraRef) {
       try {
         const data = await cameraRef.current.takePictureAsync();
         console.log(data);
-        setCameraImage(data.uri)
+
+        let resizedImage = await ImageManipulator.manipulateAsync(data.uri, [
+          {
+            resize: {
+              width: 400,
+            },
+          },
+        ]);
+
+        const formData = new FormData();
+
+        formData.append("file-to-upload", {
+          uri: resizedImage.uri,
+          path: resizedImage.uri,
+          type: "image",
+          name: resizedImage.uri,
+        });
+
+        try {
+          const response = await axios.post(
+            "https://relievedmint.herokuapp.com/cv",
+            formData,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+            }
+          );
+
+          setResults(response.data);
+          console.log(results);
+        } catch (err) {
+          console.log("err" + err);
+        }
+
+        setCameraImage(data.uri);
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
-  }
+  };
 
   const saveImage = async () => {
     if (cameraImage) {
       try {
-        await MediaLibrary.createAssetAsync(cameraImage);
-        alert('Picture saved')
+        const savedPicture = await MediaLibrary.createAssetAsync(cameraImage);
+
+        alert("Picture saved");
         setCameraImage(null);
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
-  }
+  };
 
   if (hasCameraPermission === false) {
-  return <Text>No access to camera</Text>
-}
+    return <Text>No access to camera</Text>;
+  }
 
-
-  /* <Image source={{ uri: "https://i.imgur.com/TkIrScD.png" }} style={{ width: 305, height: 159 }} /> */ 
-  
   return (
     <View style={styles.container}>
-      {!cameraImage ?
+      {!cameraImage ? (
         <Camera
           style={styles.camera}
           cameraType={cameraType}
           flashMode={flash}
           ref={cameraRef}
-        >
-
-          <Text>hello</Text>
-
-        </Camera>
-        :
+        ></Camera>
+      ) : (
         <Image source={{ uri: cameraImage }} style={styles.camera} />
-    }
+      )}
       <View>
-        {cameraImage ?
-          <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between'
-          }}>
-            <Button title={'Retake Picture'} onPress={() => setCameraImage(null)} />
-            <Button title={'Save Picture'} onPress={saveImage} />
+        {cameraImage ? (
+          <View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Button
+                title={"Retake Picture"}
+                onPress={() => setCameraImage(null)}
+              />
+              <Button title={"Save Picture"} onPress={saveImage} />
+            </View>
           </View>
-        :
-        <Button  title={'Take a picture'} icon='camera' onPress={takePicture} />
-      }
-        </View>
+        ) : (
+          <Button
+            title={"Take a picture"}
+            icon="camera"
+            onPress={takePicture}
+          />
+        )}
+      </View>
     </View>
   );
 }
@@ -98,10 +139,10 @@ export default function CameraPhoto() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     // alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20
+    justifyContent: "center",
+    marginBottom: 20,
   },
   logo: {
     width: 305,
@@ -109,12 +150,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   instructions: {
-    color: '#888',
+    color: "#888",
     fontSize: 18,
     marginHorizontal: 15,
   },
   button: {
-    backgroundColor: 'lightblue',
+    backgroundColor: "lightblue",
     padding: 10,
     borderRadius: 10,
     marginTop: 20,
@@ -125,11 +166,10 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: 300,
     height: 300,
-    resizeMode: 'contain'
+    resizeMode: "contain",
   },
   camera: {
     flex: 1,
     borderRadius: 20,
-  }
+  },
 });
-

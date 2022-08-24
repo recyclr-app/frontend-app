@@ -11,12 +11,21 @@ import {
 import * as ImagePicker from 'expo-image-picker'
 import * as Sharing from 'expo-sharing';
 import * as ImageManipulator from 'expo-image-manipulator'
+<<<<<<< HEAD
+=======
+import axios from 'axios'
+>>>>>>> e455614a5f50a396439e031fbced42b763246dbc
 
 const Upload = () => {
 
 
     //upload from camera roll
+<<<<<<< HEAD
   const [selectedImage, setSelectedImage] = React.useState(null);
+=======
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [results, setResults] = useState()
+>>>>>>> e455614a5f50a396439e031fbced42b763246dbc
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -27,13 +36,53 @@ const Upload = () => {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
+<<<<<<< HEAD
     console.log(pickerResult)
+=======
+>>>>>>> e455614a5f50a396439e031fbced42b763246dbc
 
     if (pickerResult.cancelled === true) {
       return;
     }
 
+<<<<<<< HEAD
     setSelectedImage({ localUri: pickerResult.uri });
+=======
+    let resizedImage = await ImageManipulator.manipulateAsync(
+      pickerResult.uri,
+      [
+        { resize: {
+            width: 400,
+          }},
+      ]
+    
+    )
+
+    const formData = new FormData();
+  
+    formData.append("file-to-upload", {
+      uri: resizedImage.uri,
+      path: resizedImage.uri,
+      type: pickerResult.type,
+      name: pickerResult.fileName
+    });
+
+    try {
+      const response = await axios.post(
+        'https://relievedmint.herokuapp.com/cv',
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      setResults(response.data)
+    } catch (err) {
+      console.log("err" + err);
+    }
+
+    setSelectedImage({ localUri: resizedImage.uri });
+>>>>>>> e455614a5f50a396439e031fbced42b763246dbc
   };
 
   let openShareDialogAsync = async () => {
@@ -53,6 +102,10 @@ const Upload = () => {
           source={{ uri: selectedImage.localUri }}
           style={styles.thumbnail}
         />
+<<<<<<< HEAD
+=======
+        <Text>{results.name}</Text>
+>>>>>>> e455614a5f50a396439e031fbced42b763246dbc
         <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
           <Text styles={styles.btnText}>Share this photo</Text>
         </TouchableOpacity>
@@ -104,8 +157,13 @@ const styles = StyleSheet.create({
       fontSize: 20,
     },
     thumbnail: {
+<<<<<<< HEAD
       width: 300,
       height: 300,
+=======
+      width: 400,
+      height: 600,
+>>>>>>> e455614a5f50a396439e031fbced42b763246dbc
       resizeMode: 'contain'
     },
     camera: {
