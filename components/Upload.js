@@ -11,6 +11,7 @@ import {
 import * as ImagePicker from 'expo-image-picker'
 import * as Sharing from 'expo-sharing';
 import * as ImageManipulator from 'expo-image-manipulator'
+import axios from 'axios'
 
 const Upload = () => {
 
@@ -27,13 +28,48 @@ const Upload = () => {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    console.log(pickerResult)
 
     if (pickerResult.cancelled === true) {
       return;
     }
 
-    setSelectedImage({ localUri: pickerResult.uri });
+    let resizedImage = await ImageManipulator.manipulateAsync(
+      pickerResult.uri,
+      [
+        {
+          resize: {
+            width: 400,
+          }
+        },
+      ]
+    
+    )
+
+    const formData = new FormData();
+  
+    formData.append("file-to-upload", {
+      uri: resizedImage.uri,
+      path: resizedImage.uri,
+      type: pickerResult.type,
+      name: pickerResult.fileName
+    });
+    console.log(formData);
+
+    try {
+      const response = await axios.post(
+        'https://relievedmint.herokuapp.com/cv',
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      console.log(response.data)
+    } catch (err) {
+      console.log("err" + err);
+    }
+
+    setSelectedImage({ localUri: resizedImage.uri });
   };
 
   let openShareDialogAsync = async () => {
@@ -104,8 +140,8 @@ const styles = StyleSheet.create({
       fontSize: 20,
     },
     thumbnail: {
-      width: 300,
-      height: 300,
+      width: 400,
+      height: 600,
       resizeMode: 'contain'
     },
     camera: {
