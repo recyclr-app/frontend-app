@@ -37,11 +37,9 @@ const Upload = () => {
     let resizedImage = await ImageManipulator.manipulateAsync(
       pickerResult.uri,
       [
-        {
-          resize: {
+        { resize: {
             width: 400,
-          }
-        },
+          }},
       ]
     
     )
@@ -54,7 +52,6 @@ const Upload = () => {
       type: pickerResult.type,
       name: pickerResult.fileName
     });
-    console.log(formData);
 
     try {
       const response = await axios.post(

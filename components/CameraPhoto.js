@@ -11,7 +11,10 @@ import {
 } from 'react-native';
 
 import * as MediaLibrary from 'expo-media-library'
+import * as ImageManipulator from 'expo-image-manipulator'
 import { Camera, CameraType } from 'expo-camera'
+import axios from 'axios';
+
 
 export default function CameraPhoto() {
 
@@ -22,6 +25,7 @@ export default function CameraPhoto() {
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off)
   const cameraRef = useRef(null)
   
+  const [results, setResults] = useState()
   
   useEffect(() => {
     (async () => {
@@ -36,6 +40,41 @@ export default function CameraPhoto() {
       try {
         const data = await cameraRef.current.takePictureAsync();
         console.log(data);
+
+        let resizedImage = await ImageManipulator.manipulateAsync(
+          data.uri,
+          [
+            { resize: {
+                width: 400,
+              } },
+          ]
+        
+        )
+        
+        const formData = new FormData();
+  
+        formData.append("file-to-upload", {
+          uri: resizedImage.uri,
+          path: resizedImage.uri,
+          type: 'image',
+          name: resizedImage.uri
+        });
+
+        try {
+          const response = await axios.post(
+            'https://relievedmint.herokuapp.com/cv',
+            formData,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+            }
+          );
+    
+          setResults(response.data)
+          console.log(results)
+        } catch (err) {
+          console.log("err" + err);
+        }
+        
         setCameraImage(data.uri)
       } catch (e) {
         console.log(e)
@@ -46,7 +85,7 @@ export default function CameraPhoto() {
   const saveImage = async () => {
     if (cameraImage) {
       try {
-        await MediaLibrary.createAssetAsync(cameraImage);
+        const savedPicture = await MediaLibrary.createAssetAsync(cameraImage);
         alert('Picture saved')
         setCameraImage(null);
       } catch (e) {
@@ -59,8 +98,6 @@ export default function CameraPhoto() {
   return <Text>No access to camera</Text>
 }
 
-
-  /* <Image source={{ uri: "https://i.imgur.com/TkIrScD.png" }} style={{ width: 305, height: 159 }} /> */ 
   
   return (
     <View style={styles.container}>
@@ -72,21 +109,21 @@ export default function CameraPhoto() {
           ref={cameraRef}
         >
 
-          <Text>hello</Text>
-
         </Camera>
         :
-        <Image source={{ uri: cameraImage }} style={styles.camera} />
+          <Image source={{ uri: cameraImage }} style={styles.camera} />
     }
       <View>
         {cameraImage ?
+        <View>
           <View style={{
             flexDirection: 'row',
             justifyContent: 'space-between'
           }}>
             <Button title={'Retake Picture'} onPress={() => setCameraImage(null)} />
             <Button title={'Save Picture'} onPress={saveImage} />
-          </View>
+            </View>
+        </View>
         :
         <Button  title={'Take a picture'} icon='camera' onPress={takePicture} />
       }
