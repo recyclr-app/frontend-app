@@ -7,9 +7,6 @@ import camera from "../assets/icons/camera.png";
 import imageGallery from "../assets/icons/image-gallery.png";
 import { colors } from "../globalstyles";
 
-
-
-
 export default function Main() {
   return (
     <View style={styles.main_container}>
