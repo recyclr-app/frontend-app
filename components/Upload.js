@@ -17,7 +17,8 @@ const Upload = () => {
 
 
     //upload from camera roll
-  const [selectedImage, setSelectedImage] = React.useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [results, setResults] = useState()
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -64,7 +65,7 @@ const Upload = () => {
         }
       );
 
-      console.log(response.data)
+      setResults(response.data)
     } catch (err) {
       console.log("err" + err);
     }
@@ -89,6 +90,7 @@ const Upload = () => {
           source={{ uri: selectedImage.localUri }}
           style={styles.thumbnail}
         />
+        <Text>{results.name}</Text>
         <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
           <Text styles={styles.btnText}>Share this photo</Text>
         </TouchableOpacity>
