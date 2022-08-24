@@ -1,19 +1,18 @@
-import * as React from 'react'
+import * as React from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 // import Main from "./components/Main";
 import { SafeAreaView } from "react-native";
 import { colors } from "./globalstyles";
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer } from "@react-navigation/native";
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Tabs from './components/nav/Tabs';
+import Tabs from "./components/nav/Tabs";
 
 export default function App() {
   return (
     <NavigationContainer>
       <Tabs />
     </NavigationContainer>
-
   );
 }
 

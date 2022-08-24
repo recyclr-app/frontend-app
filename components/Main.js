@@ -7,23 +7,12 @@ import camera from "../assets/icons/camera.png";
 import imageGallery from "../assets/icons/image-gallery.png";
 import { colors } from "../globalstyles";
 
-
-
-
 export default function Main() {
   return (
     <View style={styles.main_container}>
       <Image style={styles.blob_background} source={blob} />
       <Image style={styles.logo} source={mainLogo} />
       <Text style={styles.main_title}>recyclr</Text>
-      <View style={styles.lowerIcons_container}>
-        <View style={styles.smallIcon_container}>
-          <Image style={styles.smallIcon} source={camera} />
-        </View>
-        <View style={styles.smallIcon_container}>
-          <Image style={styles.smallIcon} source={imageGallery} />
-        </View>
-      </View>
     </View>
   );
 }
