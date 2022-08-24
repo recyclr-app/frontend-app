@@ -11,7 +11,6 @@ import {
 } from "react-native";
 
 import * as MediaLibrary from "expo-media-library";
-
 import * as ImageManipulator from "expo-image-manipulator";
 import { Camera, CameraType } from "expo-camera";
 import axios from "axios";
@@ -67,11 +66,10 @@ export default function CameraPhoto() {
           );
 
           setResults(response.data);
-          console.log(results);
         } catch (err) {
           console.log("err" + err);
         }
-
+        /////sdfklsdfkshd
         setCameraImage(data.uri);
       } catch (e) {
         console.log(e);
@@ -83,9 +81,9 @@ export default function CameraPhoto() {
     if (cameraImage) {
       try {
         const savedPicture = await MediaLibrary.createAssetAsync(cameraImage);
-
-        alert("Picture saved");
+        // alert('Picture saved')
         setCameraImage(null);
+        alert(results.name);
       } catch (e) {
         console.log(e);
       }
@@ -118,10 +116,10 @@ export default function CameraPhoto() {
               }}
             >
               <Button
-                title={"Retake Picture"}
+                title={"Retake Photo"}
                 onPress={() => setCameraImage(null)}
               />
-              <Button title={"Save Picture"} onPress={saveImage} />
+              <Button title={"Use Photo"} onPress={saveImage} />
             </View>
           </View>
         ) : (

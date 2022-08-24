@@ -7,7 +7,7 @@ export default function UserMenu() {
   return (
     <View style={styles.userMenu_container}>
       {links.map((link, idx) => (
-        <View style={styles.userMenuIcon_outerContainer}>
+        <View style={styles.userMenuIcon_outerContainer} key={idx}>
           <View style={styles.userMenuIcon_innerContainer} key={idx}>
             <Image style={styles.userMenuIcon} source={link.image} />
           </View>
