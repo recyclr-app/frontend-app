@@ -49,7 +49,7 @@ const Tabs = () => {
     >
       <Tab.Group>
         <Tab.Screen
-          name="HomeScreen"
+          name="Home"
           component={HomeScreen}
           options={{
             tabBarIcon: ({ focused }) => (
@@ -115,7 +115,15 @@ const Tabs = () => {
           options={{
             tabBarIcon: ({ focused }) => (
               <View>
-                <Text>User</Text>
+                <Image
+                  source={require("../../assets/icons/user1.png")}
+                  resizeMode="contain"
+                  style={{
+                    width: 25,
+                    height: 25,
+                    tintColor: focused ? "#1AB858" : "black",
+                  }}
+                />
               </View>
             ),
           }}
