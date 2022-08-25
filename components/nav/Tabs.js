@@ -1,8 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import Home from "./Home";
 import Upload from "../Upload";
 import CameraPhoto from "../CameraPhoto";
-import Main from "../Main";
+import HomeScreen from "../HomeScreen";
 import { View, Image, Text } from "react-native";
 // import cameraIcon from '../../assets/icons/camera.png'
 import UserMenu from "../UserMenu";
@@ -19,8 +18,8 @@ const Tabs = () => {
       }}
     >
       <Tab.Screen
-        name="Main"
-        component={Main}
+        name="HomeScreen"
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <View>

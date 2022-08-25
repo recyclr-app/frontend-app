@@ -1,10 +1,14 @@
 import { colors } from "../globalstyles";
-import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
+import { StyleSheet, Text, View, Image, ScrollView, SafeAreaView} from "react-native";
 import React from "react";
 import { links } from "./UserMenuLinks";
 
 export default function UserMenu() {
   return (
+    <SafeAreaView>
+
+    <ScrollView>
+
     <View style={styles.userMenu_container}>
       {links.map((link, idx) => (
         <View style={styles.userMenuIcon_outerContainer} key={idx}>
@@ -15,6 +19,8 @@ export default function UserMenu() {
         </View>
       ))}
     </View>
+      </ScrollView>
+      </SafeAreaView>
   );
 }
 
@@ -22,7 +28,6 @@ const styles = StyleSheet.create({
   userMenuIcon_innerContainer: {
     flexDirection: "column",
     width: 120,
-    // flexWrap: "wrap",
   },
   userMenuIcon_outerContainer: { width: 150 },
   userMenuIcon_innerContainer: {
