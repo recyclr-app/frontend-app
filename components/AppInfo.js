@@ -1,9 +1,10 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 
 const AppInfo = () => {
   return (
     <View>
+      <Image source={require("../assets/icons/recycle2.png")} />
       <Text>Built with love from Austin and Seattle</Text>
       <Text>
         Recycle is a free app developed with sustainability in mind. Bring the

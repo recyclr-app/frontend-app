@@ -1,16 +1,20 @@
 import { AutoFocus } from "expo-camera"; // Do we need this?
 import React from "react";
 import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
-import blob from "../assets/blob-background.png";
-import mainLogo from "../assets/icons/recycle2.png";
 import { colors } from "../globalstyles"; //Global Colors - may delete later
 
 export default function HomeScreen() {
   return (
     <View style={styles.main_container}>
-      <ImageBackground style={styles.blob_background} source={blob} />
+      <ImageBackground
+        style={styles.blob_background}
+        source={require("../assets/blob-background.png")}
+      />
       <View style={styles.mainLogo_container}>
-        <Image style={styles.logo} source={mainLogo} />
+        <Image
+          style={styles.logo}
+          source={require("../assets/icons/recycle2.png")}
+        />
         <Text style={styles.main_title}>recyclr</Text>
       </View>
     </View>
@@ -20,7 +24,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   main_container: {
     alignItems: "center",
-    background: `url(${blob})`,
     flex: 1,
     height: "100%",
     justifyContent: "center",
