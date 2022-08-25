@@ -26,7 +26,7 @@ export default function CameraPhoto() {
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const cameraRef = useRef(null);
 
-  const [results, setResults] = useState();
+  const [cvResults, setCvResults] = useState();
 
   useEffect(() => {
     (async () => {
@@ -68,7 +68,7 @@ export default function CameraPhoto() {
             }
           );
 
-          setResults(response.data);
+          setCvResults(response.data);
         } catch (err) {
           console.log("err" + err);
         }
@@ -84,8 +84,7 @@ export default function CameraPhoto() {
       try {
         const savedPicture = await MediaLibrary.createAssetAsync(cameraImage);
         setCameraImage(null);
-        navigation.navigate('Results')
-        alert(results.name);
+        navigation.navigate('Results', { cvResults: cvResults })
       } catch (e) {
         console.log(e);
       }
