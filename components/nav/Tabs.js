@@ -5,8 +5,29 @@ import HomeScreen from "../HomeScreen";
 import { View, Image, Text } from "react-native";
 // import cameraIcon from '../../assets/icons/camera.png'
 import UserMenu from "../UserMenu";
+import Results from "../Results";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+function UploadStack() {
+  return(
+    <Stack.Navigator >
+      <Stack.Screen name="UploadStack" component={Upload} />
+      <Stack.Screen name="Results" component={Results} />
+    </Stack.Navigator>
+  )
+}
+
+function CameraStack() {
+  return(
+    <Stack.Navigator >
+      <Stack.Screen name="CameraPhoto" component={CameraPhoto} />
+      <Stack.Screen name="Results" component={Results} />
+    </Stack.Navigator>
+  )
+}
 
 const Tabs = () => {
   return (
@@ -17,6 +38,7 @@ const Tabs = () => {
         tabBarActiveTintColor: "#1AB858",
       }}
     >
+    <Tab.Group>
       <Tab.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -37,8 +59,8 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="Take a Photo"
-        component={CameraPhoto}
+        name="Camera"
+        component={CameraStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
@@ -57,7 +79,7 @@ const Tabs = () => {
       />
       <Tab.Screen
         name="Upload"
-        component={Upload}
+        component={UploadStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
@@ -73,8 +95,10 @@ const Tabs = () => {
             </View>
           ),
         }}
-      />
-      {/******************************
+        />
+      </Tab.Group>
+
+      {/* *****************************
             PLACEHOLDER 
        *******************************/}
       <Tab.Screen
@@ -90,7 +114,7 @@ const Tabs = () => {
       />
       {/******************************
             END USER PLACEHOLDER 
-       *******************************/}
+       ****************************** */}
     </Tab.Navigator>
   );
 };

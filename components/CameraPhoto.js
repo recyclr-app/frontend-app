@@ -14,8 +14,11 @@ import * as MediaLibrary from "expo-media-library";
 import * as ImageManipulator from "expo-image-manipulator";
 import { Camera, CameraType } from "expo-camera";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CameraPhoto() {
+
+  const navigation = useNavigation()
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [cameraImage, setCameraImage] = useState(null);
   //set front camera vs back camera
@@ -69,7 +72,6 @@ export default function CameraPhoto() {
         } catch (err) {
           console.log("err" + err);
         }
-        /////sdfklsdfkshd
         setCameraImage(data.uri);
       } catch (e) {
         console.log(e);
@@ -81,8 +83,8 @@ export default function CameraPhoto() {
     if (cameraImage) {
       try {
         const savedPicture = await MediaLibrary.createAssetAsync(cameraImage);
-        // alert('Picture saved')
         setCameraImage(null);
+        navigation.navigate('Results')
         alert(results.name);
       } catch (e) {
         console.log(e);

@@ -13,12 +13,14 @@ import * as Sharing from "expo-sharing";
 import * as ImageManipulator from "expo-image-manipulator";
 
 import axios from "axios";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+
 
 const Upload = () => {
   //upload from camera roll
-
+  const navigation = useNavigation()
   const [selectedImage, setSelectedImage] = useState(null);
-  const [results, setResults] = useState();
+  const [cvResults, setCvResults] = useState();
 
   let openImagePickerAsync = async () => {
     let permissionResult =
@@ -64,7 +66,8 @@ const Upload = () => {
         }
       );
 
-      setResults(response.data);
+      setCvResults(response.data);
+      console.log(response.data)
     } catch (err) {
       console.log("err" + err);
     }
@@ -84,16 +87,25 @@ const Upload = () => {
     await Sharing.shareAsync(imageTmp.uri);
   };
 
+  const showResults = () => {
+    console.log(cvResults.name)
+    navigation.navigate('Results', { cvResults: cvResults })
+    setSelectedImage(null)
+  }
+
   if (selectedImage !== null) {
     return (
       <View style={styles.container}>
+
         <Image
           source={{ uri: selectedImage.localUri }}
           style={styles.thumbnail}
         />
 
-        <Text>{results.name}</Text>
-
+        <TouchableOpacity onPress={showResults} style={styles.button}>
+          <Text styles={styles.btnText}>Show Results</Text>
+        </TouchableOpacity>
+        
         <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
           <Text styles={styles.btnText}>Share this photo</Text>
         </TouchableOpacity>
@@ -104,8 +116,7 @@ const Upload = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.instructions}>
-        To share a photo from your phone with a friend, just press the button
-        below!
+        To check if an item is recycleable, please upload a photo
       </Text>
 
       <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
