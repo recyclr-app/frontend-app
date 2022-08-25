@@ -15,10 +15,9 @@ import * as ImageManipulator from "expo-image-manipulator";
 import axios from "axios";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 
-
 const Upload = () => {
   //upload from camera roll
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState(null);
   const [cvResults, setCvResults] = useState();
 
@@ -67,7 +66,7 @@ const Upload = () => {
       );
 
       setCvResults(response.data);
-      console.log(response.data)
+      console.log(response.data);
     } catch (err) {
       console.log("err" + err);
     }
@@ -88,15 +87,14 @@ const Upload = () => {
   };
 
   const showResults = () => {
-    console.log(cvResults.name)
-    navigation.navigate('Results', { cvResults: cvResults })
-    setSelectedImage(null)
-  }
+    // console.log(cvResults.name)
+    navigation.navigate("Results", { cvResults: cvResults });
+    setSelectedImage(null);
+  };
 
   if (selectedImage !== null) {
     return (
       <View style={styles.container}>
-
         <Image
           source={{ uri: selectedImage.localUri }}
           style={styles.thumbnail}
@@ -105,7 +103,7 @@ const Upload = () => {
         <TouchableOpacity onPress={showResults} style={styles.button}>
           <Text styles={styles.btnText}>Show Results</Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
           <Text styles={styles.btnText}>Share this photo</Text>
         </TouchableOpacity>
