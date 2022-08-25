@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AppInfo from "./AppInfo";
 import Settings from "./Settings";
-import { TouchableOpacity } from "react-native-web";
+import { TouchableOpacity } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,9 +22,8 @@ function UserMenu() {
   const navigation = useNavigation();
 
   const handlePress = (event) => {
-    console.log(event.target.value);
-    console.log(event.target.title);
     console.log(event.target);
+
     // navigation.navigate("AppInfo");
   };
 
@@ -41,7 +40,9 @@ function UserMenu() {
             </View>
           ))}
         </View> */}
-        <Button onPress={handlePress} title="test" />
+        <TouchableOpacity onPress={handlePress} title="test" id='test' key='test'>
+          <Text>Test</Text>
+        </TouchableOpacity>
         {/* <TouchableOpacity
           onPress={handlePress}
           title="Settings"
