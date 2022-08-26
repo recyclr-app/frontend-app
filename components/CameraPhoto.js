@@ -10,10 +10,11 @@ import {
   Button,
   SafeAreaView
 } from "react-native";
-
+import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
 import * as ImageManipulator from "expo-image-manipulator";
-import { Camera, CameraType} from "expo-camera";
+
+import { Camera, CameraType, FlashMode } from "expo-camera";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
@@ -23,8 +24,8 @@ export default function CameraPhoto() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [cameraImage, setCameraImage] = useState(null);
   //set front camera vs back camera
-  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
-  const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
+  const [type, setType] = useState(CameraType.front);
+  const [flash, setFlash] = useState(FlashMode.off);
   const cameraRef = useRef(null);
 
   const [cvResults, setCvResults] = useState();
@@ -96,15 +97,47 @@ export default function CameraPhoto() {
     return <Text>No access to camera</Text>;
   }
 
+  const handleFlashOn = () => {
+    setFlash(FlashMode.on)
+  }
+  const handleFlashOff = () => {
+    setFlash(FlashMode.off)
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {!cameraImage ? (
         <Camera
           style={styles.camera}
-          cameraType={cameraType}
+          cameraType={type}
           flashMode={flash}
           ref={cameraRef}
-        ></Camera>
+        >
+
+          <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              padding: 30
+          }}>
+
+          <TouchableOpacity>
+              {flash === FlashMode.off ? <Ionicons
+                name='flash-off-outline'
+                size={30}
+                color='black'
+                onPress={handleFlashOn}
+              /> :
+                <Ionicons
+                  name='flash-outline'
+                  size={30}
+                  color='black'
+                  onPress={handleFlashOff}
+                /> }   
+            </TouchableOpacity>
+
+          </View>
+
+        </Camera>
       ) : (
         <Image source={{ uri: cameraImage }} style={styles.camera} />
       )}
