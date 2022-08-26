@@ -25,7 +25,7 @@ function UploadStack() {
     >
       <Stack.Screen name="UploadStack" component={Upload} />
         <Stack.Screen name="Results" component={Results} />
-      <Stack.Screen name="OpenCamera" component={CameraPhoto} />
+        <Stack.Screen name="OpenCamera" component={CameraPhoto} />
       <Stack.Screen name="Achievement Page" component={UserMenu} />
       
     </Stack.Navigator>

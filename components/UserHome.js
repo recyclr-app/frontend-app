@@ -14,7 +14,9 @@ const Stack = createNativeStackNavigator();
 
 export default function UserHome() {
   return (
-    <Stack.Navigator initialRouteName="UserMenu">
+    <Stack.Navigator initialRouteName="UserMenu" screenOptions={{
+      headerShown: false
+    }}>
       <Stack.Screen name="AppInfo" component={AppInfo} />
       <Stack.Screen name="Badges" component={Badges} />
       <Stack.Screen name="Quiz" component={Quiz} />

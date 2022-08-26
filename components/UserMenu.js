@@ -39,6 +39,12 @@ export default function UserMenu({ route }) {
         <AchievementModal setModalVisible={setModalVisible} />
       </Modal>
 
+      <View style={{ justifyContent: 'center', height: 100 }}>
+        <Text style={{ fontSize: 20, marginLeft: 20, marginBottom: 10 }}><Text style={{ color: colors.green2 }}>Sign in</Text> to save progress</Text>
+        <View style={{ borderBottomColor: 'lightgray',
+          borderBottomWidth: 1, width: '90%', alignSelf: 'center' }} />
+      </View>
+
       <ScrollView>
         <View style={styles.userMenu_container}>
           {links.map((link, idx) => (
@@ -62,7 +68,11 @@ export default function UserMenu({ route }) {
 }
 
 const styles = StyleSheet.create({
-  userMenu_container: {},
+  userMenu_container: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    padding: 15
+  },
   userMenuIcon_innerContainer: {
     flexDirection: "column",
     width: 120,
@@ -81,18 +91,22 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     flexDirection: "column",
-    margin: 20,
-    width: 120,
-    height: 120,
+    flexBasis: '50%',
+    marginHorizontal: 45,
+    marginTop: 10,
+    width: 90,
+    height: 90,
   },
   userMenuIcon: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
     marginLeft: "auto",
     marginRight: "auto",
   },
   userMenuIcon_label: {
     fontWeight: "bold",
     textAlign: "center",
+    marginBottom: 20,
+    marginTop: 10,
   }
 });

@@ -23,26 +23,28 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   main_container: {
-    alignItems: "center",
     flex: 1,
-    height: "100%",
+    alignItems: "center",
     justifyContent: "center",
+    height: "100%",
     width: "100%",
   },
   blob_background: {
     flex: 1,
-    height: 1200,
-    top: -250,
-    width: 1400,
+    height: 1100,
+    top: -100,
+    width: 1100,
   },
   mainLogo_container: {
-    top: "-20%",
+    top: "-30%",
+    width: '100%',
+    alignItems: 'center'
   },
   logo: {
-    height: 250,
+    height: 215,
+    width: 215,
     position: "relative",
     resizeMode: "stretch",
-    width: 250,
   },
   main_title: {
     fontSize: 70,
