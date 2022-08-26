@@ -5,11 +5,20 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function Results({ route }) {
 
+  const [achievement, setAchievement] = useState(1)
   const { cvResults } = route.params;
   const navigation = useNavigation();
-  const navigateToUser = () => {
+  
+
+  const recycleIt = () => {
+    setAchievement(prev => ++prev)
+    console.log(`result achievment is ${achievement}`)
+    navigation.navigate('Achievement Page', { achievement: achievement })
+  }
+  
+  const trashIt = () => {
     navigation.navigate('Achievement Page')
-}
+  }
 
 
   return (
@@ -24,14 +33,17 @@ export default function Results({ route }) {
         <View style={{ alignItems: 'center' }}>
           <Text style={styles.isRecyclable}>This item appears recyclable!</Text>
             <Image source={require('../assets/icons/recycle-bin.png')} style={styles.image} />
-            <TouchableOpacity style={styles.continue} onPress={navigateToUser}>
+            <TouchableOpacity style={styles.continue} onPress={recycleIt}>
               <Text style={{ fontSize: 18 }}> >> Continue?</Text>
           </TouchableOpacity>
         </View>
           :
         <View style={{ alignItems: 'center' }}>
           <Text>Sorry, this item is not recycleable</Text>
-          <Image source={require('../assets/icons/trash-bin.png')} style={styles.image} />
+            <Image source={require('../assets/icons/trash-bin.png')} style={styles.image} />
+          <TouchableOpacity style={styles.continue} onPress={trashIt}>
+              <Text style={{ fontSize: 18 }}> >> Continue?</Text>
+          </TouchableOpacity> 
         </View>
         }
 

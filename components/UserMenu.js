@@ -6,13 +6,22 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
+  Modal,
+  Button
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { links } from "./UserMenuLinks";
 import { useNavigation } from "@react-navigation/native";
+import AchievementModal from "./AchievementModal";
 
-export default function UserMenu() {
+export default function UserMenu({ route }) {
   const navigation = useNavigation();
+  const { achievement } = route?.params || {};
+  console.log(` user achievemnt is: ${achievement}`)
+
+  const [modalVisible, setModalVisible] = useState(achievement > 0 ? true : false)
+  // const [modalVisible, setModalVisible] = useState(true)
+  console.log(modalVisible)
 
   const handlePress = (component) => {
     navigation.navigate(component);
@@ -20,6 +29,16 @@ export default function UserMenu() {
 
   return (
     <SafeAreaView>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <AchievementModal setModalVisible={setModalVisible} />
+      </Modal>
+
       <ScrollView>
         <View style={styles.userMenu_container}>
           {links.map((link, idx) => (
@@ -37,7 +56,7 @@ export default function UserMenu() {
             </View>
           ))}
         </View>
-      </ScrollView>
+        </ScrollView>
     </SafeAreaView>
   );
 }
@@ -75,5 +94,5 @@ const styles = StyleSheet.create({
   userMenuIcon_label: {
     fontWeight: "bold",
     textAlign: "center",
-  },
+  }
 });

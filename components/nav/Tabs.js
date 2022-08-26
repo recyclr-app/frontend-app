@@ -24,9 +24,7 @@ function UploadStack() {
     }}
     >
       <Stack.Screen name="UploadStack" component={Upload} />
-      {/* <Stack.Group screenOptions={{ presentation: 'modal' }} > */}
         <Stack.Screen name="Results" component={Results} />
-      {/* </Stack.Group> */}
       <Stack.Screen name="OpenCamera" component={CameraPhoto} />
       <Stack.Screen name="Achievement Page" component={UserMenu} />
       
@@ -57,7 +55,8 @@ const Tabs = () => {
         tabBarStyle: {
           width: '90%',
           height: 70,
-          margin: 25,
+          marginVertical: 25,
+          marginHorizontal: 20,
           paddingTop: 12,
           paddingBottom: 12,
           position: 'absolute',
@@ -67,7 +66,7 @@ const Tabs = () => {
           shadowOpacity: 0.1,
           shadowRadius: 3,
           alignItems: 'center',
-          justifyContent: 'space-between'
+          justifyContent: 'space-evenly'
         }
       }}
     >

@@ -88,7 +88,6 @@ const Upload = () => {
   };
 
   const showResults = () => {
-    // console.log(cvResults.name)
     navigation.navigate("Results", { cvResults: cvResults });
     setSelectedImage(null);
   };
@@ -137,13 +136,13 @@ const Upload = () => {
       </Text>
 
     <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
-      <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
-        <Ionicons name='image-outline' size={30} color='black' />
-        <Text style={styles.btnText}>Upload</Text>
-      </TouchableOpacity>
       <TouchableOpacity onPress={openCamera} style={styles.button}>
         <Ionicons name='camera-outline' size={30} color='black' />
         <Text style={styles.btnText}>Take photo</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
+        <Ionicons name='image-outline' size={30} color='black' />
+        <Text style={styles.btnText}>Upload</Text>
       </TouchableOpacity>
       </View>
     </View>
