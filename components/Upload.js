@@ -92,6 +92,10 @@ const Upload = () => {
     setSelectedImage(null);
   };
 
+  const openCamera = () => {
+    navigation.navigate('OpenCamera')
+  }
+
   if (selectedImage !== null) {
     return (
       <View style={styles.container}>
@@ -104,9 +108,9 @@ const Upload = () => {
           <Text styles={styles.btnText}>Show Results</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
+        {/* <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
           <Text styles={styles.btnText}>Share this photo</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   }
@@ -114,11 +118,14 @@ const Upload = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.instructions}>
-        To check if an item is recycleable, please upload a photo
+        To check if an item is recycleable, please select a photo
       </Text>
 
       <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
-        <Text style={styles.btnText}>Pick a photo</Text>
+        <Text style={styles.btnText}>Upload a photo</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={openCamera} style={styles.button}>
+        <Text style={styles.btnText}>Take a photo</Text>
       </TouchableOpacity>
     </View>
   );
@@ -129,8 +136,7 @@ export default Upload;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    // alignItems: 'center',
+    alignItems: 'center',
     justifyContent: "center",
     marginBottom: 20,
   },
@@ -143,23 +149,17 @@ const styles = StyleSheet.create({
     color: "#888",
     fontSize: 18,
     marginHorizontal: 15,
+    textAlign: 'center'
   },
   button: {
-    backgroundColor: "lightblue",
+    backgroundColor: "#8ADEB7",
     padding: 10,
     borderRadius: 10,
     marginTop: 20,
-  },
-  btnText: {
-    fontSize: 20,
   },
   thumbnail: {
     width: 400,
     height: 600,
     resizeMode: "contain",
-  },
-  camera: {
-    flex: 1,
-    borderRadius: 20,
   },
 });

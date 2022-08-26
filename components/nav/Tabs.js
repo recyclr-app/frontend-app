@@ -13,16 +13,25 @@ const Stack = createNativeStackNavigator();
 
 function UploadStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    screenOptions={{
+        headerShown: false,
+    }}
+    >
       <Stack.Screen name="UploadStack" component={Upload} />
       <Stack.Screen name="Results" component={Results} />
+      <Stack.Screen name="OpenCamera" component={CameraPhoto} />
     </Stack.Navigator>
   );
 }
 
 function CameraStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}
+    >
       <Stack.Screen name="CameraPhoto" component={CameraPhoto} />
       <Stack.Screen name="Results" component={Results} />
     </Stack.Navigator>
@@ -58,7 +67,7 @@ const Tabs = () => {
             ),
           }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Camera"
           component={CameraStack}
           options={{
@@ -76,9 +85,9 @@ const Tabs = () => {
               </View>
             ),
           }}
-        />
+        /> */}
         <Tab.Screen
-          name="Upload"
+          name="Add an Item"
           component={UploadStack}
           options={{
             tabBarIcon: ({ focused }) => (
