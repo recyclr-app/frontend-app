@@ -13,7 +13,6 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
 import * as ImageManipulator from "expo-image-manipulator";
-
 import { Camera, CameraType, FlashMode } from "expo-camera";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
@@ -105,7 +104,7 @@ export default function CameraPhoto() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {!cameraImage ? (
         <Camera
           style={styles.camera}
@@ -117,7 +116,9 @@ export default function CameraPhoto() {
           <View style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              padding: 30
+
+              paddingTop: 50,
+              paddingLeft: 30
           }}>
 
           <TouchableOpacity>
@@ -144,21 +145,16 @@ export default function CameraPhoto() {
       <View>
         {cameraImage ? (
           <View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                backgroundColor: 'black',
-                padding: 10,
-              }}
-            >
+            <View style={styles.options} >
               <TouchableOpacity
+                style={styles.retake}
                 onPress={() => setCameraImage(null)}
-              ><Text style={{ color: 'white', fontSize: 20 }}>Retake Photo</Text>
+              ><Text style={{ color: 'white', fontSize: 16 }}>Retake Photo</Text>
               </TouchableOpacity>
               <TouchableOpacity
+                style={styles.showResults}
                 onPress={saveImage}>
-                <Text style={{ color: 'white', fontSize: 20 }}>Use Photo</Text>
+                <Text style={{ fontSize: 16 }}>Show Results</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -169,18 +165,12 @@ export default function CameraPhoto() {
               onPress={takePicture}
               style={styles.button}
             >
-              <Image source={require('../assets/icons/camera.png')}
-                style={{
-                  width: 50,
-                  height: 50,
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  marginTop: 10
-                }} />
+              <Ionicons name='camera-outline' size={50} style={{ alignSelf: 'center', padding: 2 }} />
+
           </TouchableOpacity>
         )}
         </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -189,13 +179,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    backgroundColor: "#fff",
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: 50,
-    paddingBottom: 10,
-    width: 70,
-    height: 70,
+    width: 60,
+    height: 60,
     position: 'absolute',
-    bottom: 0,
+    bottom: 100,
     alignSelf: 'center',
     marginBottom: 10,
   },
@@ -204,4 +193,23 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  options: {
+    width: '100%',
+    margin: 20,
+    position: 'absolute',
+    bottom: 100,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    justifyContent: 'space-evenly',
+  },
+  showResults: {
+    backgroundColor: "#8ADEB7",
+    padding: 10,
+    borderRadius: 20,
+  },
+  retake: {
+    backgroundColor: "black",
+    padding: 10,
+    borderRadius: 20
+  }
 });

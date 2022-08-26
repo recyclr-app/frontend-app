@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native";
 import { colors } from "./globalstyles";
-import { NavigationContainer } from "@react-navigation/native";
+import { CurrentRenderContext, NavigationContainer } from "@react-navigation/native";
 import Tabs from "./components/nav/Tabs";
 
 
