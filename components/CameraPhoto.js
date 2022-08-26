@@ -116,7 +116,6 @@ export default function CameraPhoto() {
           <View style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-
               paddingTop: 50,
               paddingLeft: 30
           }}>
