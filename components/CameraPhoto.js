@@ -8,11 +8,12 @@ import {
   TouchableOpacity,
   Platform,
   Button,
+  SafeAreaView
 } from "react-native";
 
 import * as MediaLibrary from "expo-media-library";
 import * as ImageManipulator from "expo-image-manipulator";
-import { Camera, CameraType } from "expo-camera";
+import { Camera, CameraType} from "expo-camera";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
@@ -96,7 +97,7 @@ export default function CameraPhoto() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {!cameraImage ? (
         <Camera
           style={styles.camera}
@@ -114,61 +115,60 @@ export default function CameraPhoto() {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
+                backgroundColor: 'black',
+                padding: 10,
               }}
             >
-              <Button
-                title={"Retake Photo"}
+              <TouchableOpacity
                 onPress={() => setCameraImage(null)}
-              />
-              <Button title={"Use Photo"} onPress={saveImage} />
+              ><Text style={{ color: 'white', fontSize: 20 }}>Retake Photo</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={saveImage}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Use Photo</Text>
+              </TouchableOpacity>
             </View>
           </View>
         ) : (
-          <Button
+          <TouchableOpacity
             title={"Take a picture"}
             icon="camera"
-            onPress={takePicture}
-          />
+              onPress={takePicture}
+              style={styles.button}
+            >
+              <Image source={require('../assets/icons/camera.png')}
+                style={{
+                  width: 50,
+                  height: 50,
+                  justifyContent: 'center',
+                  alignSelf: 'center',
+                  marginTop: 10
+                }} />
+          </TouchableOpacity>
         )}
-      </View>
-    </View>
+        </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    // alignItems: 'center',
-    justifyContent: "center",
-    marginBottom: 20,
-  },
-  logo: {
-    width: 305,
-    height: 159,
-    marginBottom: 10,
-  },
-  instructions: {
-    color: "#888",
-    fontSize: 18,
-    marginHorizontal: 15,
   },
   button: {
-    backgroundColor: "lightblue",
-    padding: 10,
-    borderRadius: 10,
-    marginTop: 20,
-  },
-  btnText: {
-    fontSize: 20,
-  },
-  thumbnail: {
-    width: 300,
-    height: 300,
-    resizeMode: "contain",
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    paddingBottom: 10,
+    width: 70,
+    height: 70,
+    position: 'absolute',
+    bottom: 0,
+    alignSelf: 'center',
+    marginBottom: 10,
   },
   camera: {
     flex: 1,
-    borderRadius: 20,
+    width: '100%',
+    height: '100%',
   },
 });
