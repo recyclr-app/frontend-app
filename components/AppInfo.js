@@ -18,7 +18,7 @@ const AppInfo = () => {
             source={require("../assets/icons/recycle2.png")}
             style={styles.logo}
           />
-          <Text style={styles.title}>ryclr app </Text>
+          <Text style={styles.title}>recyclr</Text>
           <Text style={styles.subtitle}>
             Built with love from Austin and Seattle, {"\n"}©{" "}
             {new Date().getFullYear()}

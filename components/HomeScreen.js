@@ -1,7 +1,7 @@
-import { AutoFocus } from "expo-camera"; // Do we need this?
 import React from "react";
 import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 import { colors } from "../globalstyles"; //Global Colors - may delete later
+// import { useFonts } from 'expo-fonts'
 
 export default function HomeScreen() {
   return (
@@ -15,7 +15,7 @@ export default function HomeScreen() {
           style={styles.logo}
           source={require("../assets/icons/recycle2.png")}
         />
-        <Text style={styles.main_title}>recyclr</Text>
+<Text style={styles.main_title}>recyclr</Text>
       </View>
     </View>
   );
@@ -47,7 +47,9 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
   },
   main_title: {
-    fontSize: 70,
+    fontSize: 60,
     fontWeight: "bold",
+    color: colors.lightblack,
+    letterSpacing: '5rem'
   },
 });

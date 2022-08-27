@@ -1,11 +1,7 @@
 import * as React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native";
-import { colors } from "./globalstyles";
-import { CurrentRenderContext, NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import Tabs from "./components/nav/Tabs";
-
 
 
 export default function App() {
@@ -16,11 +12,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

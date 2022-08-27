@@ -40,7 +40,7 @@ export default function UserMenu({ route }) {
       </Modal>
 
       <View style={{ justifyContent: 'center', height: 100 }}>
-        <Text style={{ fontSize: 20, marginLeft: 20, marginBottom: 10 }}><Text style={{ color: colors.green2 }}>Sign in</Text> to save progress</Text>
+        <Text style={{ fontSize: 20, marginLeft: 20, marginBottom: 10, color: colors.lightblack }}><Text style={{ color: colors.green2 }}>Sign in</Text> to save progress</Text>
         <View style={{ borderBottomColor: 'lightgray',
           borderBottomWidth: 1, width: '90%', alignSelf: 'center' }} />
       </View>
@@ -108,5 +108,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     marginTop: 10,
+    color: colors.lightblack
   }
 });

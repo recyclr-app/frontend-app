@@ -6,14 +6,13 @@ import {
   View,
   TouchableOpacity,
   Platform,
-  Button,
   SafeAreaView,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Sharing from "expo-sharing";
 import * as ImageManipulator from "expo-image-manipulator";
 import axios from "axios";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 const Upload = () => {
@@ -40,11 +39,9 @@ const Upload = () => {
     let resizedImage = await ImageManipulator.manipulateAsync(
       pickerResult.uri,
       [
-        {
-          resize: {
+        { resize: {
             width: 400,
-          },
-        },
+          }},
       ]
     );
 
@@ -115,14 +112,9 @@ const Upload = () => {
           source={{ uri: selectedImage.localUri }}
           style={styles.thumbnail}
         />
-      {/* <View style={styles.optionsContainer}> */}
         <TouchableOpacity onPress={openImagePickerAsync} style={{ marginTop: 15 }}>
           <Text styles={styles.btnText}>Choose a different photo</Text>
         </TouchableOpacity>
-
-        {/* <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
-          <Text styles={styles.btnText}>Share this photo</Text>
-        </TouchableOpacity> */}
         </View>
       </SafeAreaView>
     );
@@ -156,7 +148,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: "center",
-    backgroundColor: '#D0F2E2'
   },
   pickedPhotoContainer: {
     alignItems: 'center',
