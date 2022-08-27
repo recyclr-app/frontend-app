@@ -1,11 +1,19 @@
-import { View, Text, Image, ScrollView, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  SafeAreaView,
+  TextInput,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function UserHistory() {
-  const [historyData, setHistoryData] = useState([]);
-
-  const [loading, setLoading] = useState(true);
+  const [masterDataSource, setMasterDataSource] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchData(userId = "630992c820fc61d17c3faf20") {
@@ -13,17 +21,23 @@ export default function UserHistory() {
         const res = await axios.get(
           "https://relievedmint.herokuapp.com/users/" + userId
         );
-        setHistoryData(res.data.history);
-        console.log(res.data.history);
-        console.log(Math.random() * 100);
-        setLoading(false);
-        console.log("------------------------------");
+        setMasterDataSource(res.data.history);
+        setFilteredDataSource(res.data.history);
       } catch (err) {
         console.error(error);
       }
     }
     fetchData();
   }, []);
+
+  const searchFilterFunction = (text) => {
+    const newData = masterDataSource.filter((data) =>
+      data.label.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredDataSource(newData);
+    setSearch(text);
+    setLoading(false);
+  };
 
   if (loading) {
     return (
@@ -39,7 +53,15 @@ export default function UserHistory() {
         <ScrollView>
           <View>
             <Text>History Title Placeholder</Text>
-            {historyData.map((item) => (
+
+            {/* Search Function */}
+            <TextInput
+              onChangeText={(text) => searchFilterFunction(text)}
+              value={search}
+              placeholder="Search"
+            ></TextInput>
+
+            {filteredDataSource.map((item) => (
               <View key={item._id}>
                 <View>
                   <Image
