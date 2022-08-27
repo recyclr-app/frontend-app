@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Platform,
   Button,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
@@ -17,9 +17,20 @@ import { Camera, CameraType, FlashMode } from "expo-camera";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
-export default function CameraPhoto() {
+// upload returned data from cv to history db.
+// guest/defaultuser id 630992c820fc61d17c3faf20
+const createHistory = (cvData) => {
+  const userId = "630992c820fc61d17c3faf20";
+  axios.post("https://relievedmint.herokuapp.com/history", {
+    owner: userId,
+    label: cvData.item,
+    image: cvData.url,
+    recycable: cvData.recycable,
+  });
+};
 
-  const navigation = useNavigation()
+export default function CameraPhoto() {
+  const navigation = useNavigation();
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [cameraImage, setCameraImage] = useState(null);
   //set front camera vs back camera
@@ -68,7 +79,7 @@ export default function CameraPhoto() {
               headers: { "Content-Type": "multipart/form-data" },
             }
           );
-
+          createHistory(response.data);
           setCvResults(response.data);
         } catch (err) {
           console.log("err" + err);
@@ -85,7 +96,7 @@ export default function CameraPhoto() {
       try {
         const savedPicture = await MediaLibrary.createAssetAsync(cameraImage);
         setCameraImage(null);
-        navigation.navigate('Results', { cvResults: cvResults })
+        navigation.navigate("Results", { cvResults: cvResults });
       } catch (e) {
         console.log(e);
       }
@@ -97,11 +108,11 @@ export default function CameraPhoto() {
   }
 
   const handleFlashOn = () => {
-    setFlash(FlashMode.on)
-  }
+    setFlash(FlashMode.on);
+  };
   const handleFlashOff = () => {
-    setFlash(FlashMode.off)
-  }
+    setFlash(FlashMode.off);
+  };
 
   return (
     <View style={styles.container}>
@@ -112,31 +123,32 @@ export default function CameraPhoto() {
           flashMode={flash}
           ref={cameraRef}
         >
-
-          <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
               paddingTop: 50,
-              paddingLeft: 30
-          }}>
-
-          <TouchableOpacity>
-              {flash === FlashMode.off ? <Ionicons
-                name='flash-off-outline'
-                size={30}
-                color='black'
-                onPress={handleFlashOn}
-              /> :
+              paddingLeft: 30,
+            }}
+          >
+            <TouchableOpacity>
+              {flash === FlashMode.off ? (
                 <Ionicons
-                  name='flash-outline'
+                  name="flash-off-outline"
                   size={30}
-                  color='black'
+                  color="black"
+                  onPress={handleFlashOn}
+                />
+              ) : (
+                <Ionicons
+                  name="flash-outline"
+                  size={30}
+                  color="black"
                   onPress={handleFlashOff}
-                /> }   
+                />
+              )}
             </TouchableOpacity>
-
           </View>
-
         </Camera>
       ) : (
         <Image source={{ uri: cameraImage }} style={styles.camera} />
@@ -144,15 +156,16 @@ export default function CameraPhoto() {
       <View>
         {cameraImage ? (
           <View>
-            <View style={styles.options} >
+            <View style={styles.options}>
               <TouchableOpacity
                 style={styles.retake}
                 onPress={() => setCameraImage(null)}
-              ><Text style={{ color: 'white', fontSize: 16 }}>Retake Photo</Text>
+              >
+                <Text style={{ color: "white", fontSize: 16 }}>
+                  Retake Photo
+                </Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.showResults}
-                onPress={saveImage}>
+              <TouchableOpacity style={styles.showResults} onPress={saveImage}>
                 <Text style={{ fontSize: 16 }}>Show Results</Text>
               </TouchableOpacity>
             </View>
@@ -161,14 +174,17 @@ export default function CameraPhoto() {
           <TouchableOpacity
             title={"Take a picture"}
             icon="camera"
-              onPress={takePicture}
-              style={styles.button}
-            >
-              <Ionicons name='camera-outline' size={50} style={{ alignSelf: 'center', padding: 2 }} />
-
+            onPress={takePicture}
+            style={styles.button}
+          >
+            <Ionicons
+              name="camera-outline"
+              size={50}
+              style={{ alignSelf: "center", padding: 2 }}
+            />
           </TouchableOpacity>
         )}
-        </View>
+      </View>
     </View>
   );
 }
@@ -178,28 +194,28 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
     borderRadius: 50,
     width: 60,
     height: 60,
-    position: 'absolute',
+    position: "absolute",
     bottom: 100,
-    alignSelf: 'center',
+    alignSelf: "center",
     marginBottom: 10,
   },
   camera: {
     flex: 1,
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   options: {
-    width: '100%',
+    width: "100%",
     margin: 20,
-    position: 'absolute',
+    position: "absolute",
     bottom: 100,
-    flexDirection: 'row',
-    alignSelf: 'center',
-    justifyContent: 'space-evenly',
+    flexDirection: "row",
+    alignSelf: "center",
+    justifyContent: "space-evenly",
   },
   showResults: {
     backgroundColor: "#8ADEB7",
@@ -209,6 +225,6 @@ const styles = StyleSheet.create({
   retake: {
     backgroundColor: "black",
     padding: 10,
-    borderRadius: 20
-  }
+    borderRadius: 20,
+  },
 });
