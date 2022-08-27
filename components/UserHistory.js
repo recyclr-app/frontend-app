@@ -4,6 +4,7 @@ import axios from "axios";
 
 export default function UserHistory() {
   const [historyData, setHistoryData] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
