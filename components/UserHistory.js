@@ -18,7 +18,6 @@ export default function UserHistory() {
   const [search, setSearch] = useState("");
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [softDesc, setSortDesc] = useState(true);
 
   useEffect(() => {
     async function fetchData(userId = "630992c820fc61d17c3faf20") {
@@ -47,7 +46,7 @@ export default function UserHistory() {
   const sortFunction = () => {
     setFilteredDataSource((data) => data.slice(0).reverse());
   };
-
+  
   if (loading) {
     return (
       <SafeAreaView>
@@ -61,6 +60,7 @@ export default function UserHistory() {
       <SafeAreaView>
         <ScrollView>
           <View>
+
             <Text style={styles.pageTitle}>Your rcyclr history</Text>
 
             {/* Search Function */}
