@@ -20,21 +20,21 @@ export default function UserHistory() {
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchData(userId = "630992c820fc61d17c3faf20") {
-      try {
-        const res = await axios.get(
-          "https://relievedmint.herokuapp.com/users/" + userId
-        );
-        setMasterDataSource(res.data.history);
-        setFilteredDataSource(res.data.history);
-        setLoading(false);
-      } catch (err) {
-        console.error(error);
-      }
+  async function fetchData(userId = "630992c820fc61d17c3faf20") {
+    try {
+      const res = await axios.get(
+        "https://relievedmint.herokuapp.com/users/" + userId
+      );
+      setMasterDataSource(res.data.history);
+      setFilteredDataSource(res.data.history);
+      setLoading(false);
+    } catch (err) {
+      console.error(error);
     }
+  }
+  useEffect(() => {
     fetchData();
-  }, [masterDataSource]);
+  }, []);
 
   const searchFilterFunction = (text) => {
     const newData = masterDataSource.filter((data) =>
@@ -52,8 +52,22 @@ export default function UserHistory() {
   if (loading) {
     return (
       <SafeAreaView>
-        <View>
-          <Text>Loading...</Text>
+        <View
+          style={{
+            // backgroundColor: colors.green1,
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Image
+            source={require("../assets/loading/Ajax-loader.gif")}
+            style={{
+              width: 45,
+              height: 45,
+            }}
+          />
+          <Text style={{ color: "#777777" }}>{"\n"}Loading...</Text>
         </View>
       </SafeAreaView>
     );
@@ -72,7 +86,7 @@ export default function UserHistory() {
               style={styles.input}
             ></TextInput>
 
-            <Button title="Sort by item name" onPress={() => sortFunction()} />
+            {/* <Button title="Sort by item name" onPress={() => sortFunction()} /> */}
 
             {filteredDataSource
               .slice(0)
