@@ -8,6 +8,7 @@ import {
   TextInput,
   View,
   ImageBackground,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -17,7 +18,7 @@ export default function UserHistory() {
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredDataSource, setFilteredDataSource] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData(userId = "630992c820fc61d17c3faf20") {
@@ -27,12 +28,13 @@ export default function UserHistory() {
         );
         setMasterDataSource(res.data.history);
         setFilteredDataSource(res.data.history);
+        setLoading(false);
       } catch (err) {
         console.error(error);
       }
     }
     fetchData();
-  }, []);
+  }, [masterDataSource]);
 
   const searchFilterFunction = (text) => {
     const newData = masterDataSource.filter((data) =>
@@ -46,7 +48,7 @@ export default function UserHistory() {
   const sortFunction = () => {
     setFilteredDataSource((data) => data.slice(0).reverse());
   };
-  
+
   if (loading) {
     return (
       <SafeAreaView>
@@ -60,7 +62,6 @@ export default function UserHistory() {
       <SafeAreaView>
         <ScrollView>
           <View>
-
             <Text style={styles.pageTitle}>Your rcyclr history</Text>
 
             {/* Search Function */}
@@ -89,11 +90,23 @@ export default function UserHistory() {
                       {item.label.slice(0, 1).toUpperCase() +
                         item.label.slice(1).toLowerCase()}
                     </Text>
-                    <Text>Created on {item.createdAt.slice(0, 10)}</Text>
                     <Text>
-                      {"\n"}
-                      {/* {"\n"}Delete Button Placeholder */}
+                      Created on {item.createdAt.slice(0, 10)} {"\n"}
                     </Text>
+                    <TouchableOpacity
+                      style={{ fontSize: 2 }}
+                      onPress={() => {
+                        axios.delete(
+                          "https://relievedmint.herokuapp.com/history/" +
+                            item._id
+                        );
+                        setMasterDataSource((dataset) =>
+                          dataset.filter((data) => data._id !== item._id)
+                        );
+                      }}
+                    >
+                      <Text>Delete</Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               ))}
