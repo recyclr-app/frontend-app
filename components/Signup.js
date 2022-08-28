@@ -36,6 +36,8 @@ const Signup = () => {
 
     console.log(newUser);
 
+    console.log(newUser)
+
     try {
       await axios({
         method: 'post',
