@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, KeyboardAvoidingView, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, KeyboardAvoidingView, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios';
@@ -15,24 +15,31 @@ const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const [success, setSuccess] = useState(false)
+
   const handleSignUp = async(e) => {
     e.preventDefault()
 
     const newUser = {
       firstname: firstName,
-      lasname: lastName,
+      lastname: lastName,
       email: email,
       password: password
     }
 
+    console.log(newUser)
+
     try {
       await axios({
         method: 'post',
-        url: 'https://relievedmint.herokuapp.com/users/',
+        url: 'https://relievedmint.herokuapp.com/users/signup',
         data: newUser
       })
         .then((res) => {
           console.log(res.data)
+          if (res.status === 201) {
+            setSuccess(true)
+          }
         })
       
       setFirstName('')
@@ -80,7 +87,7 @@ const Signup = () => {
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-                  onPress={() => {handleSignUp}}
+                  onPress={handleSignUp}
                   style={[styles.button, styles.buttonOutline]}
               >
                 <Text style={styles.buttonOutlineText}>Register</Text>
@@ -99,14 +106,13 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
 },
 inputContainer: {
-    width: '80%'
+  width: '70%',
 },
 input: {
-    backgroundColor: 'white',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
+    paddingTop: 15,
+    paddingBottom: 5,
     marginTop: 5,
+    borderBottomWidth: 1,
 },
 buttonContainer: {
     width: '60%',
@@ -115,17 +121,17 @@ buttonContainer: {
     marginTop: 40,
 },
 button: {
-    backgroundColor: 'black',
     width: '100%',
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 40,
     alignItems: 'center'
 },
 buttonOutline: {
-    backgroundColor: 'white',
-    marginTop: 5,
-    borderColor: 'black',
-    borderWidth: 2
+  backgroundColor: 'white',
+  shadowColor: "#171717",
+  shadowOffset: { width: -2, height: 4 },
+  shadowOpacity: 0.1,
+  shadowRadius: 3,
 },
 buttonText: {
     color: 'white',
