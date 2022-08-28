@@ -14,7 +14,6 @@ import axios from "axios";
 import { colors } from "../globalstyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { AutoFocus } from "expo-camera";
 
 export default function UserHistory() {
   const navigation = useNavigation();
@@ -39,7 +38,7 @@ export default function UserHistory() {
   }, []);
 
   useEffect(() => {
-    console.log(localData);
+    console.log(localData); //DELETE LATER
     if (localData.token) {
       async function fetchData() {
         try {
@@ -61,6 +60,26 @@ export default function UserHistory() {
       fetchData();
     }
   }, [localData]);
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    try {
+      const res = await axios.delete(
+        "https://relievedmint.herokuapp.com/history/" + id,
+        {
+          headers: {
+            Authorization: `Bearer ${localData.token}`,
+          },
+        }
+      );
+      console.log(res);
+      setFilteredDataSource((dataset) =>
+        dataset.filter((data) => data._id !== id)
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const searchFilterFunction = (text) => {
     const newData = masterDataSource.filter((data) =>
@@ -142,7 +161,7 @@ export default function UserHistory() {
                       source={
                         item.recyclable
                           ? require("../assets/icons/recycle-bin.png")
-                          : require("../assets/icons/trash-bin.png")
+                          : require("../assets/icons/cancel.png")
                       }
                       style={styles.historyIcon}
                     />
@@ -157,22 +176,13 @@ export default function UserHistory() {
                     </Text>
                     <TouchableOpacity
                       style={{ fontSize: 2 }}
-                      onPress={() => {
-                        axios.delete(
-                          "https://relievedmint.herokuapp.com/history/" +
-                            item._id
-                        );
-                        setFilteredDataSource((dataset) =>
-                          dataset.filter((data) => data._id !== item._id)
-                        );
-                      }}
+                      onPress={() => handleDelete(item._id)}
                     >
                       <Text style={{ textAlign: "right" }}>{"\n"}Delete</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
               ))}
-            {/* <Text>Clear History Button Placeholder</Text> */}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -182,8 +192,11 @@ export default function UserHistory() {
 
 const styles = StyleSheet.create({
   loadingPageContainer: {
-    width: 145,
-    height: 145,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   pageContainer: {
     height: "100%",
