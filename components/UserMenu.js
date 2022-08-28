@@ -7,7 +7,6 @@ import {
   ScrollView,
   SafeAreaView,
   Modal,
-  Button
 } from "react-native";
 import React, { useState } from "react";
 import { links } from "./UserMenuLinks";
@@ -20,12 +19,15 @@ export default function UserMenu({ route }) {
   console.log(` user achievemnt is: ${achievement}`)
 
   const [modalVisible, setModalVisible] = useState(achievement > 0 ? true : false)
-  // const [modalVisible, setModalVisible] = useState(true)
   console.log(modalVisible)
 
   const handlePress = (component) => {
     navigation.navigate(component);
   };
+
+  const handleSignIn = () => {
+    navigation.navigate('Signup')
+  }
 
   return (
     <SafeAreaView>
@@ -40,9 +42,9 @@ export default function UserMenu({ route }) {
       </Modal>
 
       <View style={{ justifyContent: 'center', height: 100 }}>
-        <Text style={{ fontSize: 20, marginLeft: 20, marginBottom: 10, color: colors.lightblack }}><Text style={{ color: colors.green2 }}>Sign in</Text> to save progress</Text>
-        <View style={{ borderBottomColor: 'lightgray',
-          borderBottomWidth: 1, width: '90%', alignSelf: 'center' }} />
+        <Text style={styles.userHeader}>
+          <Text style={{ color: colors.green2 }} onPress={handleSignIn}>Sign in</Text> to save progress</Text>
+        <View style={styles.line} />
       </View>
 
       <ScrollView>
@@ -73,12 +75,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 15
   },
+  userHeader: {
+    fontSize: 20,
+    marginLeft: 20,
+    marginBottom: 10,
+    color: colors.lightblack
+  },
+  line: {
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: 1,
+    width: '90%',
+    alignSelf: 'center'
+  },
   userMenuIcon_innerContainer: {
     flexDirection: "column",
     width: 120,
   },
   userMenuIcon_outerContainer: {
-    // width: 150,
     marginLeft: "auto",
     marginRight: "auto",
   },

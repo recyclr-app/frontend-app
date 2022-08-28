@@ -1,49 +1,14 @@
 import {
   View,
   Image,
-  Text
 } from "react-native";
-import Upload from "../Upload";
-import CameraPhoto from "../CameraPhoto";
 import HomeScreen from "../HomeScreen";
-import UserHome from "../UserHome";
-import Results from "../Results";
-import UserMenu from "../UserMenu";
+import UserStack from "./stacks/UserStack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
+import UploadStack from "./stacks/UploadStack";
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
-
-function UploadStack() {
-  return (
-    <Stack.Navigator
-    screenOptions={{
-        headerShown: false,
-    }}
-    >
-      <Stack.Screen name="UploadStack" component={Upload} />
-        <Stack.Screen name="Results" component={Results} />
-        <Stack.Screen name="OpenCamera" component={CameraPhoto} />
-      <Stack.Screen name="Achievement Page" component={UserMenu} />
-      
-    </Stack.Navigator>
-  );
-}
-
-function CameraStack() {
-  return (
-    <Stack.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}
-    >
-      <Stack.Screen name="CameraPhoto" component={CameraPhoto} />
-      <Stack.Screen name="Results" component={Results} />
-    </Stack.Navigator>
-  );
-}
 
 const Tabs = () => {
   return (
@@ -52,7 +17,7 @@ const Tabs = () => {
         headerShown: false,
         tabBarShowLabel: true,
         tabBarActiveTintColor: "#1AB858",
-        tabBarStyle: {
+        tabBarStyle: { 
           width: '90%',
           height: 70,
           marginVertical: 25,
@@ -97,15 +62,6 @@ const Tabs = () => {
             tabBarIcon: ({ focused }) => (
               <View>
                 <Ionicons name='add-outline' size={30} />
-                {/* <Image
-                  source={require("../../assets/icons/image-gallery.png")}
-                  resizeMode="contain"
-                  style={{
-                    width: 25,
-                    height: 25,
-                    tintColor: focused ? "#1AB858" : "black",
-                  }}
-                /> */}
               </View>
             ),
           }}
@@ -116,7 +72,7 @@ const Tabs = () => {
           *******************************/}
         <Tab.Screen
           name="User"
-          component={UserHome}
+          component={UserStack}
           options={{
             tabBarIcon: ({ focused }) => (
               <View>
@@ -140,5 +96,6 @@ const Tabs = () => {
     </Tab.Navigator>
   );
 };
+
 
 export default Tabs;

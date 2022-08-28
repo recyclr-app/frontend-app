@@ -89,17 +89,17 @@ const Upload = () => {
     setSelectedImage({ localUri: resizedImage.uri });
   };
 
-  let openShareDialogAsync = async () => {
-    if (Platform.OS === "web") {
-      alert(`Uh oh, sharing isn't avaible on your platform`);
-      return;
-    }
+  // let openShareDialogAsync = async () => {
+  //   if (Platform.OS === "web") {
+  //     alert(`Uh oh, sharing isn't avaible on your platform`);
+  //     return;
+  //   }
 
-    const imageTmp = await ImageManipulator.manipulateAsync(
-      selectedImage.localUri
-    );
-    await Sharing.shareAsync(imageTmp.uri);
-  };
+  //   const imageTmp = await ImageManipulator.manipulateAsync(
+  //     selectedImage.localUri
+  //   );
+  //   await Sharing.shareAsync(imageTmp.uri);
+  // };
 
   const showResults = () => {
     navigation.navigate("Results", { cvResults: cvResults });
