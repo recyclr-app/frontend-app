@@ -18,15 +18,16 @@ import { Ionicons } from "@expo/vector-icons";
 // upload returned data from cv to history db.
 // guest/defaultuser id 630992c820fc61d17c3faf20
 const createHistory = (cvData) => {
+  console.log("cvData");
+  console.log(cvData);
   const userId = "630992c820fc61d17c3faf20";
   axios.post("https://relievedmint.herokuapp.com/history", {
     owner: userId,
     label: cvData.item,
     image: cvData.url,
-    recycable: cvData.recycable,
+    recyclable: cvData.recyclable,
   });
 };
-
 
 const Upload = () => {
   //upload from camera roll

@@ -20,19 +20,19 @@ export default function UserHistory() {
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  async function fetchData(userId = "630992c820fc61d17c3faf20") {
-    try {
-      const res = await axios.get(
-        "https://relievedmint.herokuapp.com/users/" + userId
-      );
-      setMasterDataSource(res.data.history);
-      setFilteredDataSource(res.data.history);
-      setLoading(false);
-    } catch (err) {
-      console.error(error);
-    }
-  }
   useEffect(() => {
+    async function fetchData(userId = "630992c820fc61d17c3faf20") {
+      try {
+        const res = await axios.get(
+          "https://relievedmint.herokuapp.com/users/" + userId
+        );
+        setMasterDataSource(res.data.history);
+        setFilteredDataSource(res.data.history);
+        setLoading(false);
+      } catch (err) {
+        console.error(error);
+      }
+    }
     fetchData();
   }, []);
 
@@ -86,7 +86,7 @@ export default function UserHistory() {
               style={styles.input}
             ></TextInput>
 
-            {/* <Button title="Sort by item name" onPress={() => sortFunction()} /> */}
+            <Button title="Sort by item name" onPress={() => sortFunction()} />
 
             {filteredDataSource
               .slice(0)
@@ -97,6 +97,14 @@ export default function UserHistory() {
                     <Image
                       source={{ uri: item.image }}
                       style={styles.detailImage}
+                    />
+                    <Image
+                      source={
+                        item.recyclable
+                          ? require("../assets/history_icons/check.png")
+                          : require("../assets/history_icons/xmark.png")
+                      }
+                      style={styles.historyIcon}
                     />
                   </View>
                   <View style={styles.detailContainer}>
@@ -114,7 +122,7 @@ export default function UserHistory() {
                           "https://relievedmint.herokuapp.com/history/" +
                             item._id
                         );
-                        setMasterDataSource((dataset) =>
+                        setFilteredDataSource((dataset) =>
                           dataset.filter((data) => data._id !== item._id)
                         );
                       }}
@@ -164,5 +172,13 @@ const styles = StyleSheet.create({
   detailLabel: {
     fontSize: 16,
     fontWeight: "600",
+  },
+  historyIcon: {
+    width: 250,
+    height: 50,
+    aspectRatio: 1,
+    position: "relative",
+    top: -30,
+    left: 60,
   },
 });

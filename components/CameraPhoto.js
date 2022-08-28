@@ -25,7 +25,7 @@ const createHistory = (cvData) => {
     owner: userId,
     label: cvData.item,
     image: cvData.url,
-    recycable: cvData.recycable,
+    recyclable: cvData.recyclable,
   });
 };
 
