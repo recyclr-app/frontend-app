@@ -153,8 +153,8 @@ export default function UserHistory() {
                     <Image
                       source={
                         item.recyclable
-                          ? require("../assets/history_icons/check.png")
-                          : require("../assets/history_icons/xmark.png")
+                          ? require("../assets/icons/recycle-bin.png")
+                          : require("../assets/icons/trash-bin.png")
                       }
                       style={styles.historyIcon}
                     />
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   detailLabel: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "600",
   },
   historyIcon: {
