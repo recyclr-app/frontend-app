@@ -12,7 +12,6 @@ import React, { useEffect, useState } from "react";
 import { links } from "./UserMenuLinks";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AchievementModal from "./AchievementModal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function UserMenu({ route }) {
   const navigation = useNavigation();
@@ -66,6 +65,7 @@ export default function UserMenu({ route }) {
         <AchievementModal setModalVisible={setModalVisible} />
       </Modal>
 
+<<<<<<< HEAD
       <View style={{ justifyContent: "center", height: 100 }}>
         {username ? (
           <Text style={styles.userHeader}>Welcome {username}!</Text>
@@ -77,6 +77,12 @@ export default function UserMenu({ route }) {
             to save progress
           </Text>
         )}
+=======
+      <View style={{ justifyContent: 'center', height: 100 }}>
+        <Text style={styles.userHeader}>
+          <Text style={{ color: colors.green2 }} onPress={handleSignIn}>Sign in </Text>
+        to save progress</Text>
+>>>>>>> ed1cf34 (badges render)
         <View style={styles.line} />
       </View>
 

@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState } from "react";
@@ -38,6 +39,7 @@ const Login = () => {
           AsyncStorage.setItem("auth", jsonValue);
         });
     }
+    setUser('')
     navigation.navigate("UserMenu");
   };
 
@@ -47,6 +49,8 @@ const Login = () => {
   };
 
   return (
+    <>
+    <Image source={require('../assets/icons/appname.png')} style={styles.appName} />
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
         <TextInput
@@ -79,11 +83,18 @@ const Login = () => {
       <Text onPress={handleGuestMode} style={styles.login}>
         Continue as a guest
       </Text>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+  appName: {
+    resizeMode: 'contain',
+    width: '50%',
+    marginLeft: 10,
+    marginTop: 45,
+  },
   container: {
     flex: 1,
     justifyContent: "center",
