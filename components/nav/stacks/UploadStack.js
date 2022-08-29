@@ -2,6 +2,7 @@ import CameraPhoto from "../../CameraPhoto";
 import Upload from "../../Upload";
 import Results from "../../Results";
 import UserMenu from "../../UserMenu";
+import Login from "../../Login"
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -17,6 +18,7 @@ function UploadStack() {
       <Stack.Screen name="Results" component={Results} />
       <Stack.Screen name="OpenCamera" component={CameraPhoto} />
       <Stack.Screen name="Achievement Page" component={UserMenu} />
+      <Stack.Screen name="LoginPage" component={Login} />
       
     </Stack.Navigator>
   );

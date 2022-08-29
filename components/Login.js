@@ -38,6 +38,7 @@ const Login = () => {
           AsyncStorage.setItem("auth", jsonValue);
         });
     }
+    navigation.navigate("UserMenu");
   };
 
   const handleGuestMode = () => {

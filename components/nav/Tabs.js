@@ -16,7 +16,7 @@ const Tabs = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: true,
-        tabBarActiveTintColor: "#1AB858",
+        tabBarActiveTintColor: "#6ED3A6",
         tabBarStyle: { 
           width: '90%',
           height: 70,
@@ -36,25 +36,6 @@ const Tabs = () => {
       }}
     >
       <Tab.Group>
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <View>
-                <Image
-                  source={require("../../assets/icons/home.png")}
-                  resizeMode="contain"
-                  style={{
-                    width: 25,
-                    height: 25,
-                    tintColor: focused ? "#1AB858" : "black",
-                  }}
-                />
-              </View>
-            ),
-          }}
-        />
         <Tab.Screen
           name="Add an Item"
           component={UploadStack}
@@ -82,7 +63,7 @@ const Tabs = () => {
                   style={{
                     width: 25,
                     height: 25,
-                    tintColor: focused ? "#1AB858" : "black",
+                    tintColor: "black",
                   }}
                 />
               </View>
