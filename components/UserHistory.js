@@ -63,7 +63,6 @@ const UserHistory = () => {
 
   //delete single item from a user history. checks backend
   const handleDelete = async (id) => {
-    console.log(id);
     try {
       const res = await axios.delete(
         "https://relievedmint.herokuapp.com/history/" + id,
