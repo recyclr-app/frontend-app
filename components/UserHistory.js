@@ -25,6 +25,7 @@ export default function UserHistory() {
   const [loading, setLoading] = useState(true);
   const [localData, setLocalData] = useState({ token: "", id: "" });
 
+  
   useEffect(() => {
     const getLocalData = async () => {
       try {
