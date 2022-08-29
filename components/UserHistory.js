@@ -7,7 +7,6 @@ import {
   Text,
   TextInput,
   View,
-  ImageBackground,
   TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -15,7 +14,6 @@ import axios from "axios";
 import { colors } from "../globalstyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import Logout from "./Logout";
 
 export default function UserHistory() {
   const navigation = useNavigation();
@@ -25,7 +23,6 @@ export default function UserHistory() {
   const [loading, setLoading] = useState(true);
   const [localData, setLocalData] = useState({ token: "", id: "" });
 
-  
   useEffect(() => {
     const getLocalData = async () => {
       try {
@@ -41,7 +38,7 @@ export default function UserHistory() {
   }, []);
 
   useEffect(() => {
-    console.log(localData);
+    console.log(localData); //DELETE LATER
     if (localData.token) {
       async function fetchData() {
         try {
@@ -64,6 +61,26 @@ export default function UserHistory() {
     }
   }, [localData]);
 
+  const handleDelete = async (id) => {
+    console.log(id);
+    try {
+      const res = await axios.delete(
+        "https://relievedmint.herokuapp.com/history/" + id,
+        {
+          headers: {
+            Authorization: `Bearer ${localData.token}`,
+          },
+        }
+      );
+      console.log(res);
+      setFilteredDataSource((dataset) =>
+        dataset.filter((data) => data._id !== id)
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const searchFilterFunction = (text) => {
     const newData = masterDataSource.filter((data) =>
       data.label.toLowerCase().includes(text.toLowerCase())
@@ -80,14 +97,7 @@ export default function UserHistory() {
   if (!localData.token) {
     return (
       <SafeAreaView>
-        <View
-          style={{
-            // backgroundColor: colors.green1,
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <View style={styles.loadingPageContainer}>
           <Image
             source={require("../assets/whomp.gif")}
             style={{
@@ -107,14 +117,7 @@ export default function UserHistory() {
   } else if (loading) {
     return (
       <SafeAreaView>
-        <View
-          style={{
-            // backgroundColor: colors.green1,
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <View style={styles.loadingPageContainer}>
           <Image
             source={require("../assets/loading/Ajax-loader.gif")}
             style={{
@@ -130,7 +133,7 @@ export default function UserHistory() {
     return (
       <SafeAreaView>
         <ScrollView>
-          <View>
+          <View style={styles.pageContainer}>
             <Text style={styles.pageTitle}>Your recyclr history</Text>
 
             {/* Search Function */}
@@ -140,8 +143,10 @@ export default function UserHistory() {
               placeholder="Search"
               style={styles.input}
             ></TextInput>
-            <Button title="Sort by item name" onPress={() => sortFunction()} />
-            <Logout />
+            <TouchableOpacity onPress={() => sortFunction()}>
+              <Text style={{ color: "#A9A9A9" }}>sort</Text>
+            </TouchableOpacity>
+
             {filteredDataSource
               .slice(0)
               .reverse()
@@ -155,8 +160,8 @@ export default function UserHistory() {
                     <Image
                       source={
                         item.recyclable
-                          ? require("../assets/history_icons/check.png")
-                          : require("../assets/history_icons/xmark.png")
+                          ? require("../assets/icons/recycle-bin.png")
+                          : require("../assets/icons/cancel.png")
                       }
                       style={styles.historyIcon}
                     />
@@ -171,22 +176,13 @@ export default function UserHistory() {
                     </Text>
                     <TouchableOpacity
                       style={{ fontSize: 2 }}
-                      onPress={() => {
-                        axios.delete(
-                          "https://relievedmint.herokuapp.com/history/" +
-                            item._id
-                        );
-                        setFilteredDataSource((dataset) =>
-                          dataset.filter((data) => data._id !== item._id)
-                        );
-                      }}
+                      onPress={() => handleDelete(item._id)}
                     >
-                      <Text>Delete</Text>
+                      <Text style={{ textAlign: "right" }}>{"\n"}Delete</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
               ))}
-            {/* <Text>Clear History Button Placeholder</Text> */}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -195,6 +191,18 @@ export default function UserHistory() {
 }
 
 const styles = StyleSheet.create({
+  loadingPageContainer: {
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  pageContainer: {
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   pageTitle: {
     margin: 16,
     marginTop: 40,
@@ -214,6 +222,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: "#e1e1e1",
     borderColor: "transparent",
+    width: "90%",
   },
   itemContainer: {
     margin: 16,
@@ -224,7 +233,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   detailLabel: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "600",
   },
   historyIcon: {

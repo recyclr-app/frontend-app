@@ -197,6 +197,7 @@ const Upload = () => {
       </View>
 
       {loading ? <ActivityIndicator size='large' color={colors.green2} style={styles.loader} /> : null}
+
       <View style={styles.login}><Text>Already have an account? <Text onPress={handleLogin} style={{ color: colors.green2, textDecorationLine: 'underline'}}>Log in</Text></Text></View>
     </SafeAreaView>
   );
@@ -231,6 +232,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   logo: {
+
     width: 190,
     height: 190,
     alignSelf: 'center',

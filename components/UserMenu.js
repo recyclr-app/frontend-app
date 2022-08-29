@@ -46,7 +46,6 @@ export default function UserMenu({ route }) {
         { AsyncStorage.getItem('id') ? <Text style={styles.userHeader}>Welcome!</Text> : <Text style={styles.userHeader}>
           <Text style={{ color: colors.green2 }} onPress={handleSignIn}>Sign in </Text>
         to save progress</Text> }
-
         <View style={styles.line} />
       </View>
 
