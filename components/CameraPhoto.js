@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-
 import {
   Image,
   StyleSheet,
@@ -16,18 +15,7 @@ import * as ImageManipulator from "expo-image-manipulator";
 import { Camera, CameraType, FlashMode } from "expo-camera";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-
-// upload returned data from cv to history db.
-// guest/defaultuser id 630992c820fc61d17c3faf20
-const createHistory = (cvData) => {
-  const userId = "630992c820fc61d17c3faf20";
-  axios.post("https://relievedmint.herokuapp.com/history", {
-    owner: userId,
-    label: cvData.item,
-    image: cvData.url,
-    recyclable: cvData.recyclable,
-  });
-};
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function CameraPhoto() {
   const navigation = useNavigation();
@@ -37,8 +25,41 @@ export default function CameraPhoto() {
   const [type, setType] = useState(CameraType.front);
   const [flash, setFlash] = useState(FlashMode.off);
   const cameraRef = useRef(null);
-
   const [cvResults, setCvResults] = useState();
+  const [localData, setLocalData] = useState({ token: "", id: "" });
+
+  // async storage for auth
+  useEffect(() => {
+    const getLocalData = async () => {
+      try {
+        const fetchStorage = await AsyncStorage.getItem("auth");
+        if (fetchStorage) {
+          setLocalData(JSON.parse(fetchStorage));
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getLocalData();
+  }, []);
+
+  const createHistory = (cvData) => {
+    console.log("Uploading to server...");
+    axios.post(
+      "https://relievedmint.herokuapp.com/history",
+      {
+        owner: localData.id,
+        label: cvData.item,
+        image: cvData.url,
+        recyclable: cvData.recyclable,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localData.token}`,
+        },
+      }
+    );
+  };
 
   useEffect(() => {
     (async () => {
@@ -79,8 +100,10 @@ export default function CameraPhoto() {
               headers: { "Content-Type": "multipart/form-data" },
             }
           );
-          createHistory(response.data);
+
           setCvResults(response.data);
+          // upload to userhistory if logged in
+          localData.token !== "" && createHistory(response.data);
         } catch (err) {
           console.log("err" + err);
         }

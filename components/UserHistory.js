@@ -13,28 +13,53 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { colors } from "../globalstyles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Logout from "./Logout";
 
 export default function UserHistory() {
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [localData, setLocalData] = useState({ token: "", id: "" });
 
   useEffect(() => {
-    async function fetchData(userId = "630992c820fc61d17c3faf20") {
+    const getLocalData = async () => {
       try {
-        const res = await axios.get(
-          "https://relievedmint.herokuapp.com/users/" + userId
-        );
-        setMasterDataSource(res.data.history);
-        setFilteredDataSource(res.data.history);
-        setLoading(false);
+        const fetchStorage = await AsyncStorage.getItem("auth");
+        if (fetchStorage) {
+          setLocalData(JSON.parse(fetchStorage));
+        } else setLocalData({ token: "", id: "" });
       } catch (err) {
-        console.error(error);
+        console.log(err);
       }
-    }
-    fetchData();
+    };
+    getLocalData();
   }, []);
+
+  useEffect(() => {
+    console.log(localData);
+    if (localData.token) {
+      async function fetchData() {
+        try {
+          const res = await axios.get(
+            "https://relievedmint.herokuapp.com/users/" + localData.id,
+            {
+              headers: {
+                Authorization: `Bearer ${localData.token}`,
+              },
+            }
+          );
+          setMasterDataSource(res.data.history);
+          setFilteredDataSource(res.data.history);
+          setLoading(false);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      fetchData();
+    }
+  }, [localData]);
 
   const searchFilterFunction = (text) => {
     const newData = masterDataSource.filter((data) =>
@@ -49,7 +74,29 @@ export default function UserHistory() {
     setFilteredDataSource((data) => data.slice(0).reverse());
   };
 
-  if (loading) {
+  if (!localData.token) {
+    return (
+      <SafeAreaView>
+        <View
+          style={{
+            // backgroundColor: colors.green1,
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Image
+            source={require("../assets/whomp.gif")}
+            style={{
+              width: 145,
+              height: 145,
+            }}
+          />
+          <Text style={{ color: "#777777" }}>{"\n"}Sign in to see History</Text>
+        </View>
+      </SafeAreaView>
+    );
+  } else if (loading) {
     return (
       <SafeAreaView>
         <View
@@ -77,7 +124,6 @@ export default function UserHistory() {
         <ScrollView>
           <View>
             <Text style={styles.pageTitle}>Your rcyclr history</Text>
-
             {/* Search Function */}
             <TextInput
               onChangeText={(text) => searchFilterFunction(text)}
@@ -85,9 +131,8 @@ export default function UserHistory() {
               placeholder="Search"
               style={styles.input}
             ></TextInput>
-
             <Button title="Sort by item name" onPress={() => sortFunction()} />
-
+            <Logout />
             {filteredDataSource
               .slice(0)
               .reverse()

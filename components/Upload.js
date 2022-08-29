@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Image,
   StyleSheet,
@@ -14,26 +14,49 @@ import * as ImageManipulator from "expo-image-manipulator";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-
-// upload returned data from cv to history db.
-// guest/defaultuser id 630992c820fc61d17c3faf20
-const createHistory = (cvData) => {
-  console.log("cvData");
-  console.log(cvData);
-  const userId = "630992c820fc61d17c3faf20";
-  axios.post("https://relievedmint.herokuapp.com/history", {
-    owner: userId,
-    label: cvData.item,
-    image: cvData.url,
-    recyclable: cvData.recyclable,
-  });
-};
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Upload = () => {
-  //upload from camera roll
   const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState(null);
   const [cvResults, setCvResults] = useState();
+  const [localData, setLocalData] = useState({ token: "", id: "" });
+
+  // async storage for auth
+  useEffect(() => {
+    const getLocalData = async () => {
+      try {
+        const fetchStorage = await AsyncStorage.getItem("auth");
+        if (fetchStorage) {
+          setLocalData(JSON.parse(fetchStorage));
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getLocalData();
+  }, []);
+
+  const createHistory = async (cvData) => {
+    try {
+      axios.post(
+        "https://relievedmint.herokuapp.com/history",
+        {
+          owner: localData.id,
+          label: cvData.item,
+          image: cvData.url,
+          recyclable: cvData.recyclable,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localData.token}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   let openImagePickerAsync = async () => {
     let permissionResult =
@@ -80,10 +103,11 @@ const Upload = () => {
       );
 
       setCvResults(response.data);
-      createHistory(response.data);
-      console.log(response.data);
+
+      // upload to userhistory if logged in
+      localData.token !== "" && createHistory(response.data);
     } catch (err) {
-      console.log("err" + err);
+      console.log(err);
     }
 
     setSelectedImage({ localUri: resizedImage.uri });
