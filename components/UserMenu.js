@@ -8,31 +8,55 @@ import {
   SafeAreaView,
   Modal,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { links } from "./UserMenuLinks";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AchievementModal from "./AchievementModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function UserMenu({ route }) {
   const navigation = useNavigation();
   const { achievement } = route?.params || {};
-  console.log(` user achievemnt is: ${achievement}`)
+  const [username, setUsername] = useState("");
+  // console.log(` user achievemnt is: ${achievement}`);
 
-  const [modalVisible, setModalVisible] = useState(achievement > 0 ? true : false)
-  console.log(modalVisible)
+  const [modalVisible, setModalVisible] = useState(
+    achievement > 0 ? true : false
+  );
+  // console.log(modalVisible);
+  
+  // refresh screen on every load
+  const isFocused = useIsFocused();
+  useEffect(() => {}, [isFocused])
 
-  const handlePress = (component) => {
+  const handlePress = (component) => {;
     navigation.navigate(component);
   };
 
   const handleSignIn = () => {
-    navigation.navigate('Signup')
-  }
+    navigation.navigate("Signup");
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const fetchStorage = await AsyncStorage.getItem("auth");
+        console.log(fetchStorage);
+        if (fetchStorage) {
+          setUsername(JSON.parse(fetchStorage).firstname);
+        } else {
+          setUserName("");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+  });
+  console.log("hi");
 
   return (
     <SafeAreaView>
-
       <Modal
         animationType="slide"
         transparent={true}
@@ -42,10 +66,17 @@ export default function UserMenu({ route }) {
         <AchievementModal setModalVisible={setModalVisible} />
       </Modal>
 
-      <View style={{ justifyContent: 'center', height: 100 }}>
-        { AsyncStorage.getItem('id') ? <Text style={styles.userHeader}>Welcome!</Text> : <Text style={styles.userHeader}>
-          <Text style={{ color: colors.green2 }} onPress={handleSignIn}>Sign in </Text>
-        to save progress</Text> }
+      <View style={{ justifyContent: "center", height: 100 }}>
+        {username ? (
+          <Text style={styles.userHeader}>Welcome {username}!</Text>
+        ) : (
+          <Text style={styles.userHeader}>
+            <Text style={{ color: colors.green2 }} onPress={handleSignIn}>
+              Sign in{" "}
+            </Text>
+            to save progress
+          </Text>
+        )}
         <View style={styles.line} />
       </View>
 
@@ -66,28 +97,28 @@ export default function UserMenu({ route }) {
             </View>
           ))}
         </View>
-        </ScrollView>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   userMenu_container: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    padding: 15
+    flexWrap: "wrap",
+    flexDirection: "row",
+    padding: 15,
   },
   userHeader: {
     fontSize: 20,
     marginLeft: 20,
     marginBottom: 10,
-    color: colors.lightblack
+    color: colors.lightblack,
   },
   line: {
-    borderBottomColor: 'lightgray',
+    borderBottomColor: "lightgray",
     borderBottomWidth: 1,
-    width: '90%',
-    alignSelf: 'center'
+    width: "90%",
+    alignSelf: "center",
   },
   userMenuIcon_innerContainer: {
     flexDirection: "column",
@@ -106,7 +137,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     flexDirection: "column",
-    flexBasis: '50%',
+    flexBasis: "50%",
     marginHorizontal: 45,
     marginTop: 10,
     width: 90,
@@ -123,6 +154,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     marginTop: 10,
-    color: colors.lightblack
-  }
+    color: colors.lightblack,
+  },
 });
