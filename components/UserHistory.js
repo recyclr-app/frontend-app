@@ -15,6 +15,7 @@ import axios from "axios";
 import { colors } from "../globalstyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import Logout from "./Logout";
 
 export default function UserHistory() {
   const navigation = useNavigation();
@@ -139,7 +140,7 @@ export default function UserHistory() {
               style={styles.input}
             ></TextInput>
             <Button title="Sort by item name" onPress={() => sortFunction()} />
-
+            <Logout />
             {filteredDataSource
               .slice(0)
               .reverse()

@@ -26,9 +26,12 @@ export default function CameraPhoto() {
   //set front camera vs back camera
   const [type, setType] = useState(CameraType.back);
   const [flash, setFlash] = useState(FlashMode.off);
+<<<<<<< HEAD
 
   const [loading, setLoading] = useState(false)
 
+=======
+>>>>>>> dedf853 (Luxe steve (#20))
   const cameraRef = useRef(null);
   const [cvResults, setCvResults] = useState();
   const [localData, setLocalData] = useState({ token: "", id: "" });
