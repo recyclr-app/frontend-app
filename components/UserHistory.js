@@ -14,16 +14,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { colors } from "../globalstyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Logout from "./Logout";
+import { useNavigation } from "@react-navigation/native";
 
 export default function UserHistory() {
+  const navigation = useNavigation();
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
   const [localData, setLocalData] = useState({ token: "", id: "" });
 
-  
   useEffect(() => {
     const getLocalData = async () => {
       try {
@@ -93,7 +93,12 @@ export default function UserHistory() {
               height: 145,
             }}
           />
-          <Text style={{ color: "#777777" }}>{"\n"}Sign in to see History</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Signup")}
+            style={{ color: "#777777" }}
+          >
+            <Text>{"\n"}Log in or Sign up to see User History</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
@@ -134,7 +139,7 @@ export default function UserHistory() {
               style={styles.input}
             ></TextInput>
             <Button title="Sort by item name" onPress={() => sortFunction()} />
-            <Logout />
+
             {filteredDataSource
               .slice(0)
               .reverse()
