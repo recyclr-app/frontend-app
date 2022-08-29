@@ -27,7 +27,9 @@ export default function UserHistory() {
     const getLocalData = async () => {
       try {
         const fetchStorage = await AsyncStorage.getItem("auth");
-        setLocalData(JSON.parse(fetchStorage));
+        if (fetchStorage) {
+          setLocalData(JSON.parse(fetchStorage));
+        } else setLocalData({ token: "", id: "" });
       } catch (err) {
         console.log(err);
       }
@@ -73,7 +75,7 @@ export default function UserHistory() {
     setFilteredDataSource((data) => data.slice(0).reverse());
   };
 
-  /*  if (!localData || localData === null) {
+  if (!localData.token) {
     return (
       <SafeAreaView>
         <View
@@ -95,9 +97,7 @@ export default function UserHistory() {
         </View>
       </SafeAreaView>
     );
-  } else */
-
-  if (loading) {
+  } else if (loading) {
     return (
       <SafeAreaView>
         <View
@@ -133,7 +133,7 @@ export default function UserHistory() {
               style={styles.input}
             ></TextInput>
             <Button title="Sort by item name" onPress={() => sortFunction()} />
-            {/* <Logout /> */}
+            <Logout />
             {filteredDataSource
               .slice(0)
               .reverse()
