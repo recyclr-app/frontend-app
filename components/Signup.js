@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -60,6 +61,8 @@ const Signup = () => {
   };
 
   return (
+    <>
+    <Image source={require('../assets/icons/appname.png')} style={styles.appName} />
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
         <TextInput
@@ -101,11 +104,18 @@ const Signup = () => {
       <Text onPress={handlePress} style={styles.login}>
         Existing User?
       </Text>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+  appName: {
+    resizeMode: 'contain',
+    width: '50%',
+    marginLeft: 10,
+    marginTop: 45,
+  },
   container: {
     flex: 1,
     justifyContent: "center",

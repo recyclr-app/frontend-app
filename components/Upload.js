@@ -210,7 +210,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: '100%',
-    backgroundColor: 'white'
   },
   appName: {
     resizeMode: 'contain',
@@ -221,7 +220,6 @@ const styles = StyleSheet.create({
     width: '80%',
     marginLeft: 20,
     color: 'gray',
-    backgroundColor: 'white'
   },
   pickedPhotoContainer: {
     alignItems: "center",
