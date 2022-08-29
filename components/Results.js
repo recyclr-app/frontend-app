@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, Image, Modal, TouchableOpacity } 
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { colors } from "../globalstyles";
 
 export default function Results({ route }) {
 
@@ -41,7 +42,7 @@ export default function Results({ route }) {
           <Text>Sorry, this item is not recycleable</Text>
             <Image source={require('../assets/icons/cancel.png')} style={styles.image} />
           <TouchableOpacity style={styles.continue} onPress={trashIt}>
-              <Text style={{ fontSize: 18, color: 'white' }}> >> Continue?</Text>
+              <Text style={{ fontSize: 18 }}> >> Continue?</Text>
           </TouchableOpacity> 
         </View>
         }
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   continue: {
     marginTop: 40,
     flexDirection: 'row',
-    backgroundColor: "black",
+    backgroundColor: colors.green2,
     padding: 10,
     borderRadius: 10,
     marginBottom: 10,

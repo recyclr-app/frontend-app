@@ -36,7 +36,7 @@ const Tabs = () => {
       }}
     >
       <Tab.Group>
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Home"
           component={HomeScreen}
           options={{
@@ -54,7 +54,7 @@ const Tabs = () => {
               </View>
             ),
           }}
-        />
+        /> */}
         <Tab.Screen
           name="Add an Item"
           component={UploadStack}

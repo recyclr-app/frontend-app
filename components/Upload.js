@@ -161,8 +161,8 @@ const Upload = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.main_title}>recyclr</Text>
-    <View style={styles.lowerContainer}>
+      <Image source={require('../assets/icons/appname.png')} style={styles.appName} />
+      <View style={styles.lowerContainer}>
       <Image
         source={require("../assets/icons/recycle2.png")}
         style={styles.logo}
@@ -177,7 +177,7 @@ const Upload = () => {
           justifyContent: "space-evenly",
           width: "100%",
         }}
-      >
+        >
         <TouchableOpacity onPress={openCamera} style={styles.button}>
           <Ionicons name="camera-outline" size={30} color="black" />
           <Text style={styles.btnText}>Take photo</Text>
@@ -190,7 +190,7 @@ const Upload = () => {
       </View>
 
       {loading ? <ActivityIndicator size='large' color={colors.green2} style={styles.loader} /> : null}
-        {/* <Text>Already have an account? Log in</Text> */}
+        <Text style={styles.login}>Already have an account? Log in</Text>
     </SafeAreaView>
   );
 };
@@ -201,15 +201,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: '100%',
-    // alignItems: "center",
-    // justifyContent: "space-evenly",
   },
-  main_title: {
-    paddingLeft: 15,
-    fontSize: 60,
-    fontWeight: "bold",
-    color: colors.lightblack,
-    letterSpacing: '5rem'
+  appName: {
+    resizeMode: 'contain',
+    width: '50%'
   },
   pickedPhotoContainer: {
     alignItems: "center",
@@ -221,22 +216,23 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   logo: {
-    width: 200,
-    height: 200,
+    width: 190,
+    height: 190,
     alignSelf: 'center',
   },
   lowerContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: '90%',
     alignSelf: 'center',
-    paddingVertical: 10,
+    paddingVertical: 20,
     borderRadius: 20,
     marginVertical: 70,
   },
   instructions: {
     color: "#888",
-    fontSize: 24,
+    fontSize: 22,
     margin: 15,
+    paddingTop: 20,
     textAlign: "center",
   },
   button: {
@@ -250,6 +246,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
+  },
+  login: {
+    alignSelf: 'center',
+    color: colors.green2,
+    marginTop: 40
   },
   loader: {
     position: 'absolute',
