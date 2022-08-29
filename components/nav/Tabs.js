@@ -1,7 +1,4 @@
-import {
-  View,
-  Image,
-} from "react-native";
+import { View, Image } from "react-native";
 import HomeScreen from "../HomeScreen";
 import UserStack from "./stacks/UserStack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -17,22 +14,22 @@ const Tabs = () => {
         headerShown: false,
         tabBarShowLabel: true,
         tabBarActiveTintColor: "#6ED3A6",
-        tabBarStyle: { 
-          width: '90%',
+        tabBarStyle: {
+          width: "90%",
           height: 70,
           marginVertical: 25,
           marginHorizontal: 20,
           paddingTop: 12,
           paddingBottom: 12,
-          position: 'absolute',
+          position: "absolute",
           borderRadius: 50,
           shadowColor: "#171717",
           shadowOffset: { width: -2, height: 4 },
           shadowOpacity: 0.1,
           shadowRadius: 3,
-          alignItems: 'center',
-          justifyContent: 'space-evenly'
-        }
+          alignItems: "center",
+          justifyContent: "space-evenly",
+        },
       }}
     >
       <Tab.Group>
@@ -42,15 +39,11 @@ const Tabs = () => {
           options={{
             tabBarIcon: ({ focused }) => (
               <View>
-                <Ionicons name='add-outline' size={30} />
+                <Ionicons name="add-outline" size={30} />
               </View>
             ),
           }}
         />
-
-        {/* *****************************
-            PLACEHOLDER 
-          *******************************/}
         <Tab.Screen
           name="User"
           component={UserStack}
@@ -70,13 +63,9 @@ const Tabs = () => {
             ),
           }}
         />
-        {/******************************
-            END USER PLACEHOLDER 
-          ****************************** */}
       </Tab.Group>
     </Tab.Navigator>
   );
 };
-
 
 export default Tabs;
