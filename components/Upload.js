@@ -15,7 +15,6 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getAsyncStorage } from "../hooks/asyncStorage";
 
 const Upload = () => {
   const navigation = useNavigation();
@@ -37,8 +36,6 @@ const Upload = () => {
     };
     getLocalData();
   }, []);
-
-  // useEffect(() => setLocalData(getAsyncStorage()), []);
 
   const createHistory = async (cvData) => {
     try {
