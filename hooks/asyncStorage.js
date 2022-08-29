@@ -1,12 +1,8 @@
-import { Text, View } from 'react-native'
-import React, { Component } from 'react'
-
-export default class asyncStorage extends Component {
-  render() {
-    return (
-      <View>
-        <Text>asyncStorage</Text>
-      </View>
-    )
+export const getAsyncStorage = async () => {
+  try {
+    const getStorage = await AsyncStorage.getItem("auth");
+    return JSON.parse(getStorage)
+  } catch (err) {
+    console.log(err);
   }
 }

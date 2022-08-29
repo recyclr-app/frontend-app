@@ -15,6 +15,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAsyncStorage } from "../hooks/asyncStorage";
 
 const Upload = () => {
   const navigation = useNavigation();
@@ -37,22 +38,27 @@ const Upload = () => {
     getLocalData();
   }, []);
 
-  const createHistory = (cvData) => {
-    console.log("Uploading to server...");
-    axios.post(
-      "https://relievedmint.herokuapp.com/history",
-      {
-        owner: localData.id,
-        label: cvData.item,
-        image: cvData.url,
-        recyclable: cvData.recyclable,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localData.token}`,
+  // useEffect(() => setLocalData(getAsyncStorage()), []);
+
+  const createHistory = async (cvData) => {
+    try {
+      axios.post(
+        "https://relievedmint.herokuapp.com/history",
+        {
+          owner: localData.id,
+          label: cvData.item,
+          image: cvData.url,
+          recyclable: cvData.recyclable,
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${localData.token}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   let openImagePickerAsync = async () => {
@@ -104,7 +110,7 @@ const Upload = () => {
       // upload to userhistory if logged in
       localData.token !== "" && createHistory(response.data);
     } catch (err) {
-      console.log("err" + err);
+      console.log(err);
     }
 
     setSelectedImage({ localUri: resizedImage.uri });

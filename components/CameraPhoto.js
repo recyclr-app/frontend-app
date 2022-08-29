@@ -27,6 +27,7 @@ export default function CameraPhoto() {
   const [flash, setFlash] = useState(FlashMode.off);
   const cameraRef = useRef(null);
   const [cvResults, setCvResults] = useState();
+  const [localData, setLocalData] = useState({ token: "", id: "" });
 
   // async storage for auth
   useEffect(() => {
