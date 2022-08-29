@@ -19,12 +19,10 @@ const Login = () => {
   };
 
   const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [success, setSuccess] = useState(false);
-
+    email: '',
+    password: ''
+  })
+  
   const handleChange = (text, field) => {
     setUser({ ...user, [field]: text });
   };

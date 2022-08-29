@@ -38,22 +38,24 @@ const Signup = () => {
 
     try {
       await axios({
-        method: "post",
-        url: "https://relievedmint.herokuapp.com/users/signup",
-        data: newUser,
-      }).then((res) => {
-        console.log(res.data);
-        if (res.status === 201) {
-          setSuccess(true);
-        }
-      });
-
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setPassword("");
-    } catch (err) {
-      console.log(err);
+        method: 'post',
+        url: 'https://relievedmint.herokuapp.com/users/signup',
+        data: newUser
+      })
+        .then((res) => {
+          console.log(res.data)
+          if (res.status === 201) {
+            setSuccess(true)
+          }
+        })
+      
+      navigation.navigate('Login')
+      setFirstName('')
+      setLastName('')
+      setEmail('')
+      setPassword('')
+     } catch (err) {
+      console.log(err)
     }
   };
 

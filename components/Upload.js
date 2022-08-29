@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Platform,
   SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Sharing from "expo-sharing";
@@ -57,6 +58,7 @@ const Upload = () => {
       console.log(err);
     }
   };
+  const [loading, setLoading] = useState(false)
 
   let openImagePickerAsync = async () => {
     let permissionResult =
@@ -68,11 +70,12 @@ const Upload = () => {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-
+    
+    setLoading(true)
     if (pickerResult.cancelled === true) {
+      setLoading(false)
       return;
     }
-
     let resizedImage = await ImageManipulator.manipulateAsync(
       pickerResult.uri,
       [
@@ -113,21 +116,10 @@ const Upload = () => {
     setSelectedImage({ localUri: resizedImage.uri });
   };
 
-  // let openShareDialogAsync = async () => {
-  //   if (Platform.OS === "web") {
-  //     alert(`Uh oh, sharing isn't avaible on your platform`);
-  //     return;
-  //   }
-
-  //   const imageTmp = await ImageManipulator.manipulateAsync(
-  //     selectedImage.localUri
-  //   );
-  //   await Sharing.shareAsync(imageTmp.uri);
-  // };
-
   const showResults = () => {
     navigation.navigate("Results", { cvResults: cvResults });
     setSelectedImage(null);
+    setLoading(false)
   };
 
   const openCamera = () => {
@@ -167,7 +159,9 @@ const Upload = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.main_title}>recyclr</Text>
+    <View style={styles.lowerContainer}>
       <Image
         source={require("../assets/icons/recycle2.png")}
         style={styles.logo}
@@ -175,7 +169,6 @@ const Upload = () => {
       <Text style={styles.instructions}>
         To check if an item is recycleable, please select a photo
       </Text>
-
       <View
         style={{
           marginTop: 20,
@@ -192,8 +185,12 @@ const Upload = () => {
           <Ionicons name="image-outline" size={30} color="black" />
           <Text style={styles.btnText}>Upload</Text>
         </TouchableOpacity>
+        </View>
       </View>
-    </View>
+
+      {loading ? <ActivityIndicator size='large' color={colors.green2} style={styles.loader} /> : null}
+        {/* <Text>Already have an account? Log in</Text> */}
+    </SafeAreaView>
   );
 };
 
@@ -202,8 +199,16 @@ export default Upload;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    height: '100%',
+    // alignItems: "center",
+    // justifyContent: "space-evenly",
+  },
+  main_title: {
+    paddingLeft: 15,
+    fontSize: 60,
+    fontWeight: "bold",
+    color: colors.lightblack,
+    letterSpacing: '5rem'
   },
   pickedPhotoContainer: {
     alignItems: "center",
@@ -215,9 +220,17 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   logo: {
-    width: 215,
-    height: 215,
-    position: "relative",
+    width: 200,
+    height: 200,
+    alignSelf: 'center',
+  },
+  lowerContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    width: '90%',
+    alignSelf: 'center',
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginVertical: 70,
   },
   instructions: {
     color: "#888",
@@ -236,6 +249,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
+  },
+  loader: {
+    position: 'absolute',
+    bottom: 0,
+    paddingBottom: 150,
   },
   thumbnail: {
     width: "90%",

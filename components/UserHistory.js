@@ -23,6 +23,7 @@ export default function UserHistory() {
   const [loading, setLoading] = useState(true);
   const [localData, setLocalData] = useState({ token: "", id: "" });
 
+  
   useEffect(() => {
     const getLocalData = async () => {
       try {
@@ -123,7 +124,8 @@ export default function UserHistory() {
       <SafeAreaView>
         <ScrollView>
           <View>
-            <Text style={styles.pageTitle}>Your rcyclr history</Text>
+            <Text style={styles.pageTitle}>Your recyclr history</Text>
+
             {/* Search Function */}
             <TextInput
               onChangeText={(text) => searchFilterFunction(text)}

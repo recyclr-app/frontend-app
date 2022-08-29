@@ -1,11 +1,11 @@
-import { View, Text } from "react-native";
+import { SafeAreaView, Text } from "react-native";
 import React from "react";
 
 const Settings = () => {
   return (
-    <View>
-      <Text>Settings</Text>
-    </View>
+    <SafeAreaView>
+      <Text>Sign out</Text>
+    </SafeAreaView>
   );
 };
 

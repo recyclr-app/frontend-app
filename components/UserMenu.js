@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import { links } from "./UserMenuLinks";
 import { useNavigation } from "@react-navigation/native";
 import AchievementModal from "./AchievementModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function UserMenu({ route }) {
   const navigation = useNavigation();
@@ -42,7 +43,10 @@ export default function UserMenu({ route }) {
       </Modal>
 
       <View style={{ justifyContent: 'center', height: 100 }}>
-        <Text style={styles.userHeader}>
+        {/* { AsyncStorage.getItem('id') ? <Text style={styles.userHeader}>Welcome!</Text> : <Text style={styles.userHeader}>
+          <Text style={{ color: colors.green2 }} onPress={handleSignIn}>Sign in</Text>
+        to save progress</Text> } */}
+         <Text style={styles.userHeader}>
           <Text style={{ color: colors.green2 }} onPress={handleSignIn}>Sign in</Text> to save progress</Text>
         <View style={styles.line} />
       </View>
