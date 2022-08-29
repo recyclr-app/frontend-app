@@ -6,6 +6,10 @@ export default function Logout() {
   const handleLogout = async () => {
     try {
       AsyncStorage.clear();
+      const storage = await AsyncStorage.setItem(
+        "auth",
+        JSON.stringify({ token: "", id: "" })
+      );
     } catch (err) {
       console.log(err);
     }

@@ -46,7 +46,6 @@ export default function UserHistory() {
             "https://relievedmint.herokuapp.com/users/" + localData.id,
             {
               headers: {
-                // Authorization: `Bearer ${localData.token}`,
                 Authorization: `Bearer ${localData.token}`,
               },
             }
