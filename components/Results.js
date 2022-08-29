@@ -42,7 +42,7 @@ export default function Results({ route }) {
           <Text>Sorry, this item is not recycleable</Text>
             <Image source={require('../assets/icons/cancel.png')} style={styles.image} />
           <TouchableOpacity style={styles.continue} onPress={trashIt}>
-              <Text style={{ fontSize: 18 }}> >> Continue?</Text>
+              <Text style={{ fontSize: 18, color: 'white' }}> >> Continue?</Text>
           </TouchableOpacity> 
         </View>
         }
