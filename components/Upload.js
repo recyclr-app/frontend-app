@@ -16,6 +16,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { colors } from "../globalstyles";
 
 const Upload = () => {
   const navigation = useNavigation();
@@ -254,6 +255,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     paddingBottom: 150,
+    alignSelf: 'center'
   },
   thumbnail: {
     width: "90%",
