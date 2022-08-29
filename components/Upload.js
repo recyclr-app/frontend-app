@@ -127,6 +127,10 @@ const Upload = () => {
     navigation.navigate("OpenCamera");
   };
 
+  const handleLogin = () => {
+    navigation.navigate('')
+  }
+
   if (selectedImage !== null) {
     return (
       <SafeAreaView
@@ -190,7 +194,7 @@ const Upload = () => {
       </View>
 
       {loading ? <ActivityIndicator size='large' color={colors.green2} style={styles.loader} /> : null}
-        <Text style={styles.login}>Already have an account? Log in</Text>
+        <Text style={styles.login} onPress={handleLogin}>Already have an account? Log in</Text>
     </SafeAreaView>
   );
 };
