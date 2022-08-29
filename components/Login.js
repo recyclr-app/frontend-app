@@ -53,7 +53,7 @@ const Login = () => {
         <TextInput
           placeholder="email"
           value={user.email}
-          onChangeText={(text) => handleChange(text, "email")}
+          onChangeText={(text) => handleChange(text.toLowerCase(), "email")}
           style={styles.input}
         />
         <TextInput
