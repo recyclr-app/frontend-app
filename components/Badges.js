@@ -8,7 +8,7 @@ const Badges = () => {
   const [localData, setLocalData] = useState({ token: "", id: "" });
   const [historyItems, setHistoryItems] = useState()
   
-  //input logic to check for history
+  //get localdata
   useEffect(() => {
     const getLocalData = async () => {
       try {
@@ -23,9 +23,8 @@ const Badges = () => {
     getLocalData();
   }, []);
 
-  
+  //gets history from backend
   useEffect(() => {
-    console.log(localData); //DELETE LATER
     if (localData.token) {
       async function fetchData() {
         try {
@@ -46,8 +45,6 @@ const Badges = () => {
       fetchData();
     }
   }, [localData]);
-
-
 
   return (
     <SafeAreaView style={styles.container}>

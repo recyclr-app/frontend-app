@@ -1,5 +1,4 @@
 import { View, Image } from "react-native";
-import HomeScreen from "../HomeScreen";
 import UserStack from "./stacks/UserStack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";

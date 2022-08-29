@@ -20,8 +20,7 @@ function UploadStack() {
       <Stack.Screen name="OpenCamera" component={CameraPhoto} />
       <Stack.Screen name="Achievement Page" component={UserMenu} />
       <Stack.Screen name="LoginPage" component={Login} />
-      <Stack.Screen name="Signup" component={Signup} />
-      
+      <Stack.Screen name="Signup" component={Signup} />     
     </Stack.Navigator>
   );
 }

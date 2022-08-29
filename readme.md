@@ -13,3 +13,22 @@ Web Page: React.JS
 Backend: Express, Multer, Mongoose, MongoDB, Heroku
 Software: Adobe Photoshop, Adobe Illustrator, Figma, Postman
 API: Azure Cognitive Services - Computer Vision, Cloudinary
+
+## Future Implementations
+- Build out achievements to reward user sucesses in substainbility. 
+- Refractor and move repeated code into reusable components.
+- Place APIs and Local Storage Hooks in respective component.
+- Buid out interactive quiz for users.
+- Inform users when they sucessfully login.
+- Inform users when they enter an invalid password.
+- Add password requirements for users to sign up.
+- Delete all feature in user history.
+- Share badges or photo uploads with friends on social media. 
+- Write test for app
+
+
+## Gettting Started
+
+1. Fork and clone repository to your local device.
+2. Run npm install to install local dependancies
+3. Install xCode. Download it from the App Store.

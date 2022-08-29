@@ -6,13 +6,11 @@ import {
   Button,
   StyleSheet,
 } from "react-native";
-import React, { Component } from "react";
-import { colors } from "../globalstyles";
-export class RecyclingGuide extends Component {
-  render() {
+import React from "react";
+
+const RecyclingGuide = () => {
     const uriEpa = "https://www.epa.gov/recycle";
-    const uriWM =
-      "https://app.copy.ai/projects/7182734?tab=results&tool=ProductDescriptions";
+    const uriWM = "https://app.copy.ai/projects/7182734?tab=results&tool=ProductDescriptions";
     return (
       <SafeAreaView>
         <View style={styles.container}>
@@ -44,10 +42,8 @@ export class RecyclingGuide extends Component {
           </View>
         </View>
       </SafeAreaView>
-    );
-  }
+    )
 }
-
 const styles = StyleSheet.create({
   container: {
     padding: 20,
@@ -71,4 +67,5 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
 });
+
 export default RecyclingGuide;

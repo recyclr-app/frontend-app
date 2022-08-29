@@ -13,17 +13,14 @@ import axios from "axios";
 
 const Signup = () => {
   const navigation = useNavigation();
-
-  const handlePress = () => {
-    navigation.navigate("Login");
-  };
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [success, setSuccess] = useState(false);
+  const handlePress = () => {
+    navigation.navigate("Login");
+  };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -33,9 +30,7 @@ const Signup = () => {
       lastname: lastName,
       email: email,
       password: password,
-    };
-
-    console.log(newUser);
+    }
 
     try {
       await axios({
@@ -45,9 +40,6 @@ const Signup = () => {
       })
         .then((res) => {
           console.log(res.data)
-          if (res.status === 201) {
-            setSuccess(true)
-          }
         })
       
       navigation.navigate('Login')

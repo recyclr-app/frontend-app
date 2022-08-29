@@ -5,6 +5,7 @@ export default function Quiz() {
   return (
     <View>
       <Text>Quiz</Text>
+      <Text>Is cardboard recyclable?</Text>
     </View>
   );
 }

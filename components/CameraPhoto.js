@@ -6,10 +6,7 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Platform,
-  Button,
-  SafeAreaView,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
@@ -26,9 +23,7 @@ export default function CameraPhoto() {
   //set front camera vs back camera
   const [type, setType] = useState(CameraType.back);
   const [flash, setFlash] = useState(FlashMode.off);
-
-  const [loading, setLoading] = useState(false)
-
+  const [loading, setLoading] = useState(false);
   const cameraRef = useRef(null);
   const [cvResults, setCvResults] = useState();
   const [localData, setLocalData] = useState({ token: "", id: "" });
@@ -47,9 +42,8 @@ export default function CameraPhoto() {
     };
     getLocalData();
   }, []);
-
+  //send data from userphoto to backend
   const createHistory = (cvData) => {
-    console.log("Uploading to server...");
     axios.post(
       "https://relievedmint.herokuapp.com/history",
       {
@@ -66,6 +60,7 @@ export default function CameraPhoto() {
     );
   };
 
+  //get camera permissions from user
   useEffect(() => {
     (async () => {
       MediaLibrary.requestPermissionsAsync();
@@ -75,13 +70,12 @@ export default function CameraPhoto() {
   }, []);
 
   const takePicture = async () => {
-
-    setLoading(true)
+    setLoading(true);
     if (cameraRef) {
       try {
         const data = await cameraRef.current.takePictureAsync();
-        console.log(data);
 
+        //resizing image before sending to cv api
         let resizedImage = await ImageManipulator.manipulateAsync(data.uri, [
           {
             resize: {
@@ -89,9 +83,7 @@ export default function CameraPhoto() {
             },
           },
         ]);
-
         const formData = new FormData();
-
         formData.append("file-to-upload", {
           uri: resizedImage.uri,
           path: resizedImage.uri,
@@ -107,16 +99,15 @@ export default function CameraPhoto() {
               headers: { "Content-Type": "multipart/form-data" },
             }
           );
-
           setCvResults(response.data);
           // upload to userhistory if logged in
           localData.token !== "" && createHistory(response.data);
         } catch (err) {
-          console.log("err" + err);
+          console.log(err);
         }
         setCameraImage(data.uri);
-      } catch (e) {
-        console.log(e);
+      } catch (err) {
+        console.log(err);
       }
     }
   };
@@ -126,18 +117,18 @@ export default function CameraPhoto() {
       try {
         const savedPicture = await MediaLibrary.createAssetAsync(cameraImage);
         setCameraImage(null);
-        setLoading(false)
+        setLoading(false);
         navigation.navigate("Results", { cvResults: cvResults });
-      } catch (e) {
-        console.log(e);
+      } catch (err) {
+        console.log(err);
       }
     }
   };
 
   const handleRetake = () => {
-    setLoading(false)
-    setCameraImage(null)
-  }
+    setLoading(false);
+    setCameraImage(null);
+  };
 
   if (hasCameraPermission === false) {
     return <Text>No access to camera</Text>;
@@ -193,10 +184,7 @@ export default function CameraPhoto() {
         {cameraImage ? (
           <View>
             <View style={styles.options}>
-              <TouchableOpacity
-                style={styles.retake}
-                onPress={handleRetake}
-              >
+              <TouchableOpacity style={styles.retake} onPress={handleRetake}>
                 <Text style={{ color: "white", fontSize: 16 }}>
                   Retake Photo
                 </Text>
@@ -207,26 +195,27 @@ export default function CameraPhoto() {
             </View>
           </View>
         ) : (
-         
           <TouchableOpacity
             title={"Take a picture"}
             icon="camera"
             onPress={takePicture}
             style={styles.button}
-            >
-      {!loading ? 
-          <Ionicons
-          name="camera-outline"
-          size={50}
-          style={{ alignSelf: "center", padding: 2 }}
-                />
-                : <ActivityIndicator size='large' color={colors.green2} style={{ alignSelf: "center", paddingLeft: 2 }} /> }  
-
-            </TouchableOpacity>
-            
-        )
-
-        }
+          >
+            {!loading ? (
+              <Ionicons
+                name="camera-outline"
+                size={50}
+                style={{ alignSelf: "center", padding: 2 }}
+              />
+            ) : (
+              <ActivityIndicator
+                size="large"
+                color={colors.green2}
+                style={{ alignSelf: "center", paddingLeft: 2 }}
+              />
+            )}
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -244,7 +233,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 100,
     alignSelf: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
     marginBottom: 10,
   },
   camera: {

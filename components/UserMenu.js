@@ -18,12 +18,9 @@ export default function UserMenu({ route }) {
   const navigation = useNavigation();
   const { achievement } = route?.params || {};
   const [username, setUsername] = useState("");
-  // console.log(` user achievemnt is: ${achievement}`);
-
   const [modalVisible, setModalVisible] = useState(
     achievement > 0 ? true : false
   );
-  // console.log(modalVisible);
   
   // refresh screen on every load
   const isFocused = useIsFocused();
@@ -36,12 +33,11 @@ export default function UserMenu({ route }) {
   const handleSignIn = () => {
     navigation.navigate("Signup");
   };
-
+  //get local storage to greet user
   useEffect(() => {
     async function fetchData() {
       try {
         const fetchStorage = await AsyncStorage.getItem("auth");
-        console.log(fetchStorage);
         if (fetchStorage) {
           setUsername(JSON.parse(fetchStorage).firstname);
         } else {
@@ -53,7 +49,6 @@ export default function UserMenu({ route }) {
     }
     fetchData();
   });
-  console.log("hi");
 
   return (
     <SafeAreaView>

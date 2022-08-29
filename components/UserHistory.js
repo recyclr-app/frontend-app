@@ -11,11 +11,10 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { colors } from "../globalstyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
-export default function UserHistory() {
+const UserHistory = () => {
   const navigation = useNavigation();
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [search, setSearch] = useState("");
@@ -23,6 +22,7 @@ export default function UserHistory() {
   const [loading, setLoading] = useState(true);
   const [localData, setLocalData] = useState({ token: "", id: "" });
 
+  //fetch data from async to check if user is loggedin
   useEffect(() => {
     const getLocalData = async () => {
       try {
@@ -37,8 +37,8 @@ export default function UserHistory() {
     getLocalData();
   }, []);
 
+  //fetch history from backend
   useEffect(() => {
-    console.log(localData); //DELETE LATER
     if (localData.token) {
       async function fetchData() {
         try {
@@ -61,6 +61,7 @@ export default function UserHistory() {
     }
   }, [localData]);
 
+  //delete single item from a user history. checks backend
   const handleDelete = async (id) => {
     console.log(id);
     try {
@@ -72,7 +73,6 @@ export default function UserHistory() {
           },
         }
       );
-      console.log(res);
       setFilteredDataSource((dataset) =>
         dataset.filter((data) => data._id !== id)
       );
@@ -109,7 +109,9 @@ export default function UserHistory() {
             onPress={() => navigation.navigate("Signup")}
             style={{ color: "#777777" }}
           >
-            <Text>{"\n"}Log in or Sign up to see User History</Text>
+            <Text>
+              {"\n"}Whomp Whomp{"\n"}Log in or Sign up to see User History
+            </Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -143,6 +145,7 @@ export default function UserHistory() {
               placeholder="Search"
               style={styles.input}
             ></TextInput>
+            {/* Sort Function */}
             <TouchableOpacity onPress={() => sortFunction()}>
               <Text style={{ color: "#A9A9A9" }}>sort</Text>
             </TouchableOpacity>
@@ -188,7 +191,7 @@ export default function UserHistory() {
       </SafeAreaView>
     );
   }
-}
+};
 
 const styles = StyleSheet.create({
   loadingPageContainer: {
@@ -245,3 +248,5 @@ const styles = StyleSheet.create({
     left: 60,
   },
 });
+
+export default UserHistory;

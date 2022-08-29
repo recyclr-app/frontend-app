@@ -10,7 +10,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import * as Sharing from "expo-sharing";
 import * as ImageManipulator from "expo-image-manipulator";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
@@ -23,8 +22,9 @@ const Upload = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [cvResults, setCvResults] = useState();
   const [localData, setLocalData] = useState({ token: "", id: "" });
+  const [loading, setLoading] = useState(false);
 
-  // async storage for auth
+  //async storage for auth
   useEffect(() => {
     const getLocalData = async () => {
       try {
@@ -39,6 +39,7 @@ const Upload = () => {
     getLocalData();
   }, []);
 
+  //send data from userphoto to backend
   const createHistory = async (cvData) => {
     try {
       axios.post(
@@ -59,9 +60,10 @@ const Upload = () => {
       console.log(err);
     }
   };
-  const [loading, setLoading] = useState(false)
 
+  //opens user image picker
   let openImagePickerAsync = async () => {
+    //get user permission to access camera roll
     let permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -70,13 +72,15 @@ const Upload = () => {
       return;
     }
 
+    //set image to user choice
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    
-    setLoading(true)
+
+    setLoading(true);
     if (pickerResult.cancelled === true) {
-      setLoading(false)
+      setLoading(false);
       return;
     }
+    //reduce photo size before prior to sending to backend
     let resizedImage = await ImageManipulator.manipulateAsync(
       pickerResult.uri,
       [
@@ -96,7 +100,7 @@ const Upload = () => {
       type: pickerResult.type,
       name: pickerResult.fileName,
     });
-
+    //send image data to cv api
     try {
       const response = await axios.post(
         "https://relievedmint.herokuapp.com/cv",
@@ -108,9 +112,8 @@ const Upload = () => {
 
       setCvResults(response.data);
 
-      // upload to userhistory if logged in
+      //upload to userhistory if logged in
       localData.token !== "" && createHistory(response.data);
-      
     } catch (err) {
       console.log(err);
     }
@@ -121,7 +124,7 @@ const Upload = () => {
   const showResults = () => {
     navigation.navigate("Results", { cvResults: cvResults });
     setSelectedImage(null);
-    setLoading(false)
+    setLoading(false);
   };
 
   const openCamera = () => {
@@ -129,8 +132,8 @@ const Upload = () => {
   };
 
   const handleLogin = () => {
-    navigation.navigate('LoginPage')
-  }
+    navigation.navigate("LoginPage");
+  };
 
   if (selectedImage !== null) {
     return (
@@ -166,40 +169,62 @@ const Upload = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={require('../assets/icons/appname.png')} style={styles.appName} />
+      <Image
+        source={require("../assets/icons/appname.png")}
+        style={styles.appName}
+      />
       <Text style={styles.statement}>Recycling can be confusing.</Text>
       <Text style={styles.statement}>We're here to help.</Text>
-      
+
       <View style={styles.lowerContainer}>
-      <Image
-        source={require("../assets/icons/recycle2.png")}
-        style={styles.logo}
-      />
-      <Text style={styles.instructions}>
-        Use your camera to identify if an item is recyclable
-      </Text>
-      <View
-        style={{
-          marginTop: 20,
-          flexDirection: "row",
-          justifyContent: "space-evenly",
-          width: "100%",
-        }}
+        <Image
+          source={require("../assets/icons/recycle2.png")}
+          style={styles.logo}
+        />
+        <Text style={styles.instructions}>
+          Use your camera to identify if an item is recyclable
+        </Text>
+        <View
+          style={{
+            marginTop: 20,
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            width: "100%",
+          }}
         >
-        <TouchableOpacity onPress={openCamera} style={styles.button}>
-          <Ionicons name="camera-outline" size={30} color="black" />
-          <Text style={styles.btnText}>Take photo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
-          <Ionicons name="image-outline" size={30} color="black" />
-          <Text style={styles.btnText}>Upload</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={openCamera} style={styles.button}>
+            <Ionicons name="camera-outline" size={30} color="black" />
+            <Text style={styles.btnText}>Take photo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={openImagePickerAsync}
+            style={styles.button}
+          >
+            <Ionicons name="image-outline" size={30} color="black" />
+            <Text style={styles.btnText}>Upload</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
-      {loading ? <ActivityIndicator size='large' color={colors.green2} style={styles.loader} /> : null}
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color={colors.green2}
+          style={styles.loader}
+        />
+      ) : null}
 
-      <View style={styles.login}><Text>Already have an account? <Text onPress={handleLogin} style={{ color: colors.green2, textDecorationLine: 'underline'}}>Log in</Text></Text></View>
+      <View style={styles.login}>
+        <Text>
+          Already have an account?{" "}
+          <Text
+            onPress={handleLogin}
+            style={{ color: colors.green2, textDecorationLine: "underline" }}
+          >
+            Log in
+          </Text>
+        </Text>
+      </View>
     </SafeAreaView>
   );
 };
@@ -209,17 +234,17 @@ export default Upload;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: '100%',
+    height: "100%",
   },
   appName: {
-    resizeMode: 'contain',
-    width: '50%',
+    resizeMode: "contain",
+    width: "50%",
     marginLeft: 10,
   },
   statement: {
-    width: '80%',
+    width: "80%",
     marginLeft: 20,
-    color: 'gray',
+    color: "gray",
   },
   pickedPhotoContainer: {
     alignItems: "center",
@@ -231,29 +256,28 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   logo: {
-
     width: 190,
     height: 190,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   lowerContainer: {
     backgroundColor: colors.blob,
-    width: '90%',
-    alignSelf: 'center',
+    width: "90%",
+    alignSelf: "center",
     padding: 20,
     borderRadius: 30,
     marginVertical: 40,
   },
   instructions: {
     color: colors.lightblack,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 20,
     margin: 15,
     paddingTop: 20,
     textAlign: "center",
   },
   button: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     width: 100,
     padding: 10,
     borderRadius: 10,
@@ -266,13 +290,13 @@ const styles = StyleSheet.create({
   },
   login: {
     marginTop: 50,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   loader: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     paddingBottom: 150,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
   thumbnail: {
     width: "90%",

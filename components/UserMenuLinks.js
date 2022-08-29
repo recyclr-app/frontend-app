@@ -1,5 +1,3 @@
-import React from "react";
-
 export const links = [
   {
     label: "Recycling Guide",

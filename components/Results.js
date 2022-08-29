@@ -1,19 +1,15 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, Modal, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../globalstyles";
 
 export default function Results({ route }) {
-
   const [achievement, setAchievement] = useState(1)
   const { cvResults } = route.params;
   const navigation = useNavigation();
-  
 
   const recycleIt = () => {
     setAchievement(prev => ++prev)
-    console.log(`result achievment is ${achievement}`)
     navigation.navigate('Achievement Page', { achievement: achievement })
   }
   
@@ -21,20 +17,16 @@ export default function Results({ route }) {
     navigation.navigate('Achievement Page')
   }
 
-
   return (
     <SafeAreaView >
-     
       <View style={styles.resultsContainer}>
       <Text style={styles.item}>This looks like a {cvResults.item}.</Text>
-      {/* <Image source={{ uri: cvResults.url }} style={styles.resultImage} /> */}
-      
         {cvResults.recyclable === true ? 
         <View style={{ alignItems: 'center' }}>
           <Text style={styles.isRecyclable}>This item appears recyclable!</Text>
             <Image source={require('../assets/icons/recycle-bin.png')} style={styles.image} />
             <TouchableOpacity style={styles.continue} onPress={recycleIt}>
-              <Text style={{ fontSize: 18 }}> >> Continue?</Text>
+              <Text style={{ fontSize: 18 }}>Continue</Text>
           </TouchableOpacity>
         </View>
           :
@@ -42,14 +34,13 @@ export default function Results({ route }) {
           <Text>Sorry, this item is not recycleable</Text>
             <Image source={require('../assets/icons/cancel.png')} style={styles.image} />
           <TouchableOpacity style={styles.continue} onPress={trashIt}>
-              <Text style={{ fontSize: 18, color: 'white' }}> >> Continue?</Text>
+              <Text style={{ fontSize: 18, color: 'white' }}>Continue</Text>
           </TouchableOpacity> 
         </View>
         }
 
       <Text style={styles.rulesText}>Always check local regulations and labels, where applicable, before disposing of an item.</Text>
       </View>
-
     </SafeAreaView>
   );
 }
