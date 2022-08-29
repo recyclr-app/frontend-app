@@ -29,9 +29,6 @@ export default function CameraPhoto() {
 
   const [loading, setLoading] = useState(false)
 
-
-  const [loading, setLoading] = useState(false)
-
   const cameraRef = useRef(null);
   const [cvResults, setCvResults] = useState();
   const [localData, setLocalData] = useState({ token: "", id: "" });
