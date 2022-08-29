@@ -128,7 +128,7 @@ const Upload = () => {
   };
 
   const handleLogin = () => {
-    navigation.navigate('')
+    navigation.navigate('LoginPage')
   }
 
   if (selectedImage !== null) {
@@ -166,13 +166,16 @@ const Upload = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Image source={require('../assets/icons/appname.png')} style={styles.appName} />
+      <Text style={styles.statement}>Recycling can be confusing.</Text>
+      <Text style={styles.statement}>We're here to help.</Text>
+      
       <View style={styles.lowerContainer}>
       <Image
         source={require("../assets/icons/recycle2.png")}
         style={styles.logo}
       />
       <Text style={styles.instructions}>
-        To check if an item is recycleable, please select a photo
+        Use your camera to identify if an item is recyclable
       </Text>
       <View
         style={{
@@ -194,7 +197,7 @@ const Upload = () => {
       </View>
 
       {loading ? <ActivityIndicator size='large' color={colors.green2} style={styles.loader} /> : null}
-        <Text style={styles.login} onPress={handleLogin}>Already have an account? Log in</Text>
+      <View style={styles.login}><Text>Already have an account? <Text onPress={handleLogin} style={{ color: colors.green2, textDecorationLine: 'underline'}}>Log in</Text></Text></View>
     </SafeAreaView>
   );
 };
@@ -205,10 +208,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: '100%',
+    backgroundColor: 'white'
   },
   appName: {
     resizeMode: 'contain',
-    width: '50%'
+    width: '50%',
+    marginLeft: 10,
+  },
+  statement: {
+    width: '80%',
+    marginLeft: 20,
+    color: 'gray',
+    backgroundColor: 'white'
   },
   pickedPhotoContainer: {
     alignItems: "center",
@@ -225,36 +236,36 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   lowerContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    backgroundColor: colors.blob,
     width: '90%',
     alignSelf: 'center',
-    paddingVertical: 20,
-    borderRadius: 20,
-    marginVertical: 70,
+    padding: 20,
+    borderRadius: 30,
+    marginVertical: 40,
   },
   instructions: {
-    color: "#888",
-    fontSize: 22,
+    color: colors.lightblack,
+    fontWeight: 'bold',
+    fontSize: 20,
     margin: 15,
     paddingTop: 20,
     textAlign: "center",
   },
   button: {
-    backgroundColor: "#8ADEB7",
+    backgroundColor: 'white',
     width: 100,
-    padding: 5,
+    padding: 10,
     borderRadius: 10,
     marginBottom: 10,
     alignItems: "center",
     shadowColor: "#171717",
-    shadowOffset: { width: -2, height: 4 },
+    shadowOffset: { width: -2, height: 6 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
   },
   login: {
+    marginTop: 50,
     alignSelf: 'center',
-    color: colors.green2,
-    marginTop: 40
   },
   loader: {
     position: 'absolute',
