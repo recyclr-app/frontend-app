@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-
+import { colors } from "../globalstyles";
 import {
   Image,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
   Platform,
   Button,
   SafeAreaView,
+  ActivityIndicator
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
@@ -16,29 +17,54 @@ import * as ImageManipulator from "expo-image-manipulator";
 import { Camera, CameraType, FlashMode } from "expo-camera";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-
-// upload returned data from cv to history db.
-// guest/defaultuser id 630992c820fc61d17c3faf20
-const createHistory = (cvData) => {
-  const userId = "630992c820fc61d17c3faf20";
-  axios.post("https://relievedmint.herokuapp.com/history", {
-    owner: userId,
-    label: cvData.item,
-    image: cvData.url,
-    recyclable: cvData.recyclable,
-  });
-};
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function CameraPhoto() {
   const navigation = useNavigation();
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [cameraImage, setCameraImage] = useState(null);
   //set front camera vs back camera
-  const [type, setType] = useState(CameraType.front);
+  const [type, setType] = useState(CameraType.back);
   const [flash, setFlash] = useState(FlashMode.off);
-  const cameraRef = useRef(null);
 
+  const [loading, setLoading] = useState(false)
+
+  const cameraRef = useRef(null);
   const [cvResults, setCvResults] = useState();
+  const [localData, setLocalData] = useState({ token: "", id: "" });
+
+  // async storage for auth
+  useEffect(() => {
+    const getLocalData = async () => {
+      try {
+        const fetchStorage = await AsyncStorage.getItem("auth");
+        if (fetchStorage) {
+          setLocalData(JSON.parse(fetchStorage));
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getLocalData();
+  }, []);
+
+  const createHistory = (cvData) => {
+    console.log("Uploading to server...");
+    axios.post(
+      "https://relievedmint.herokuapp.com/history",
+      {
+        owner: localData.id,
+        label: cvData.item,
+        image: cvData.url,
+        recyclable: cvData.recyclable,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localData.token}`,
+        },
+      }
+    );
+  };
 
   useEffect(() => {
     (async () => {
@@ -49,6 +75,8 @@ export default function CameraPhoto() {
   }, []);
 
   const takePicture = async () => {
+
+    setLoading(true)
     if (cameraRef) {
       try {
         const data = await cameraRef.current.takePictureAsync();
@@ -79,8 +107,10 @@ export default function CameraPhoto() {
               headers: { "Content-Type": "multipart/form-data" },
             }
           );
-          createHistory(response.data);
+
           setCvResults(response.data);
+          // upload to userhistory if logged in
+          localData.token !== "" && createHistory(response.data);
         } catch (err) {
           console.log("err" + err);
         }
@@ -96,12 +126,18 @@ export default function CameraPhoto() {
       try {
         const savedPicture = await MediaLibrary.createAssetAsync(cameraImage);
         setCameraImage(null);
+        setLoading(false)
         navigation.navigate("Results", { cvResults: cvResults });
       } catch (e) {
         console.log(e);
       }
     }
   };
+
+  const handleRetake = () => {
+    setLoading(false)
+    setCameraImage(null)
+  }
 
   if (hasCameraPermission === false) {
     return <Text>No access to camera</Text>;
@@ -159,7 +195,7 @@ export default function CameraPhoto() {
             <View style={styles.options}>
               <TouchableOpacity
                 style={styles.retake}
-                onPress={() => setCameraImage(null)}
+                onPress={handleRetake}
               >
                 <Text style={{ color: "white", fontSize: 16 }}>
                   Retake Photo
@@ -171,19 +207,26 @@ export default function CameraPhoto() {
             </View>
           </View>
         ) : (
+         
           <TouchableOpacity
             title={"Take a picture"}
             icon="camera"
             onPress={takePicture}
             style={styles.button}
-          >
-            <Ionicons
-              name="camera-outline"
-              size={50}
-              style={{ alignSelf: "center", padding: 2 }}
-            />
-          </TouchableOpacity>
-        )}
+            >
+      {!loading ? 
+          <Ionicons
+          name="camera-outline"
+          size={50}
+          style={{ alignSelf: "center", padding: 2 }}
+                />
+                : <ActivityIndicator size='large' color={colors.green2} style={{ alignSelf: "center", paddingLeft: 2 }} /> }  
+
+            </TouchableOpacity>
+            
+        )
+
+        }
       </View>
     </View>
   );
@@ -201,6 +244,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 100,
     alignSelf: "center",
+    justifyContent: 'center',
     marginBottom: 10,
   },
   camera: {
@@ -218,7 +262,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   showResults: {
-    backgroundColor: "#8ADEB7",
+    backgroundColor: colors.green2,
     padding: 10,
     borderRadius: 20,
   },

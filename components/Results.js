@@ -23,11 +23,10 @@ export default function Results({ route }) {
 
   return (
     <SafeAreaView >
-      {/* <Image source={{ uri: cvResults.url }} style={styles.resultImage} /> */}
-
+     
       <View style={styles.resultsContainer}>
+      <Text style={styles.item}>This looks like a {cvResults.item}.</Text>
       {/* <Image source={{ uri: cvResults.url }} style={styles.resultImage} /> */}
-      <Text style={styles.item}>This item looks like a {cvResults.item}.</Text>
       
         {cvResults.recyclable === true ? 
         <View style={{ alignItems: 'center' }}>
@@ -40,9 +39,9 @@ export default function Results({ route }) {
           :
         <View style={{ alignItems: 'center' }}>
           <Text>Sorry, this item is not recycleable</Text>
-            <Image source={require('../assets/icons/trash-bin.png')} style={styles.image} />
+            <Image source={require('../assets/icons/cancel.png')} style={styles.image} />
           <TouchableOpacity style={styles.continue} onPress={trashIt}>
-              <Text style={{ fontSize: 18 }}> >> Continue?</Text>
+              <Text style={{ fontSize: 18, color: 'white' }}> >> Continue?</Text>
           </TouchableOpacity> 
         </View>
         }
@@ -64,8 +63,8 @@ const styles = StyleSheet.create({
   },
   resultImage: {
     resize: 'auto',
-    width: '100%',
-    height: '50%'
+    width: '20%',
+    height: '20%'
   },
   item: {
     fontSize: 24,
@@ -73,11 +72,12 @@ const styles = StyleSheet.create({
   },
   isRecyclable: {
     fontSize: 16,
+    marginBottom: 10
   },
   image: {
     width: 150,
     height: 150,
-    marginVertical: 10
+    marginVertical: 15
   },
   rulesText: {
     textAlign: 'center'
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   continue: {
     marginTop: 40,
     flexDirection: 'row',
-    backgroundColor: "#8ADEB7",
+    backgroundColor: "black",
     padding: 10,
     borderRadius: 10,
     marginBottom: 10,
