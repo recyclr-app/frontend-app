@@ -110,6 +110,7 @@ const Upload = () => {
 
       // upload to userhistory if logged in
       localData.token !== "" && createHistory(response.data);
+      
     } catch (err) {
       console.log(err);
     }
