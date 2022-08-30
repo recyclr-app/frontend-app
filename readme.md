@@ -3,7 +3,8 @@
 
 ### Learn how reducing, reusing, and recycling can help you, your community, and the environment by saving money, energy, and natural resources.
 
-![promo-resized](https://user-images.githubusercontent.com/104602440/187334165-38e13460-4f2e-4fe8-b8dd-37f1abfa7700.jpg)
+<img src="https://user-images.githubusercontent.com/104602440/187334911-ce31b79f-fd7b-4043-8c4c-d0cf94539186.png" width=70% >
+
 
 
 ## Project Description
