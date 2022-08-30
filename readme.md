@@ -11,6 +11,8 @@
 
 Recyclr is a native iOS app that empowers users to contribute to sustainability. The app provides an accurate picture of whether or not an object is recyclable through a simple photo upload process, and provides additional resources for users in order to better understand the recycling process and explain how to properly dispose of the waste.
 
+Visit the product and and demo it at <a href="https://recyclr.netlify.com/">https://recyclr.netlify.com/</a>
+
 ## Technologies Used
 
 
