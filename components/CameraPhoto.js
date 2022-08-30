@@ -43,7 +43,7 @@ export default function CameraPhoto() {
     getLocalData();
   }, []);
   //send data from userphoto to backend
-  const createHistory = (cvData) => {
+  const createHistory = async (cvData) => {
     axios.post(
       "https://relievedmint.herokuapp.com/history",
       {
