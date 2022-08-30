@@ -15,7 +15,7 @@ Visit the product and and demo it at <a href="https://recyclr.netlify.com/">http
 
 ## Technologies Used
 
-- iOS App: React Native, Expo, xCode, React-Naviation, Axios
+- iOS App: React Native, Expo, xCode, React-Navigation, Axios
 - Web Site: React.JS
 - Backend: Express, Multer, Mongoose, MongoDB, Heroku
 - Software: Adobe Photoshop, Adobe Illustrator, Figma, Postman
