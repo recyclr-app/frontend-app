@@ -35,7 +35,7 @@ API: Azure Cognitive Services - Computer Vision, Cloudinary
 
 ## App Images
 
-<img src="https://user-images.githubusercontent.com/20288105/187324932-c6c0a9c6-27ba-4a9f-9922-3efebef6490e.png" />
+<img src="https://user-images.githubusercontent.com/20288105/187324932-c6c0a9c6-27ba-4a9f-9922-3efebef6490e.png">
 ![iPhone-13-Pro---Graphite---Portrait](https://user-images.githubusercontent.com/20288105/187324932-c6c0a9c6-27ba-4a9f-9922-3efebef6490e.png)
 ![iPhone-13-Pro---Graphite---Portrait2](https://user-images.githubusercontent.com/20288105/187324935-6f5d7a0a-46ba-44ec-b1e2-d53ef8c496cf.png)
 ![iPhone-13-Pro---Graphite---Portrait3](https://user-images.githubusercontent.com/20288105/187324936-ffe14c17-f5db-48fa-a6a8-b8c3a6e42df2.png)
