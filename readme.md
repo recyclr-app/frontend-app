@@ -2,17 +2,23 @@
 
 ### Learn how reducing, reusing, and recycling can help you, your community, and the environment by saving money, energy, and natural resources.
 
+
+
+<img src="https://user-images.githubusercontent.com/20288105/187325656-3379e77c-c226-4203-8df4-aac6b7d7ce71.png" width="150" alt="product image"></img>
+
 ## Project Description
 
 Recyclr is a native iOS app that empowers users to contribute to sustainability. The app provides an accurate picture of whether or not an object is recyclable through a simple photo upload process, and provides additional resources for users in order to better understand the recycling process and explain how to properly dispose of the waste.
 
 ## Technologies Used
 
-iOS App: React Native, Expo, xCode, React-Naviation, Axios
-Web Page: React.JS
-Backend: Express, Multer, Mongoose, MongoDB, Heroku
-Software: Adobe Photoshop, Adobe Illustrator, Figma, Postman
-API: Azure Cognitive Services - Computer Vision, Cloudinary
+
+-iOS App: React Native, Expo, xCode, React-Naviation, Axios
+-Web Site: React.JS
+-Backend: Express, Multer, Mongoose, MongoDB, Heroku
+-Software: Adobe Photoshop, Adobe Illustrator, Figma, Postman
+-API: Azure Cognitive Services - Computer Vision, Cloudinary
+
 
 ## Future Implementations
 - Build out achievements to reward user sucesses in substainbility. 
