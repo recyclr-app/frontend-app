@@ -38,6 +38,7 @@ const Badges = () => {
           );
           const num = (res.data.history).length
           setHistoryItems(num)
+          console.log(historyItems)
         } catch (err) {
           console.log(err);
         }

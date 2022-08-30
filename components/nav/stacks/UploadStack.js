@@ -5,6 +5,7 @@ import UserMenu from "../../UserMenu";
 import Login from "../../Login"
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Signup from "../../Signup";
+import UserStack from './UserStack'
 
 const Stack = createNativeStackNavigator();
 
@@ -15,12 +16,13 @@ function UploadStack() {
         headerShown: false,
     }}
     >
+
       <Stack.Screen name="UploadStack" component={Upload} />
       <Stack.Screen name="Results" component={Results} />
       <Stack.Screen name="OpenCamera" component={CameraPhoto} />
       <Stack.Screen name="Achievement Page" component={UserMenu} />
-      <Stack.Screen name="LoginPage" component={Login} />
-      <Stack.Screen name="Signup" component={Signup} />     
+      <Stack.Screen name="UserStack" component={UserStack} />
+
     </Stack.Navigator>
   );
 }

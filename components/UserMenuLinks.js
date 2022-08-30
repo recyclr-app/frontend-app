@@ -6,7 +6,7 @@ export const links = [
   },
   {
     label: "Take a Quiz",
-    image: require("../assets/icons/speech-bubble.png"),
+    image: require("../assets/icons/quiz1.png"),
     component: "Quiz",
   },
   {
@@ -21,7 +21,7 @@ export const links = [
   },
   {
     label: "Settings",
-    image: require("../assets/icons/settings.png"),
+    image: require("../assets/icons/settings1.png"),
     component: "Settings",
   },
   {

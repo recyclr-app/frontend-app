@@ -5,7 +5,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Platform,
   SafeAreaView,
   ActivityIndicator,
 } from "react-native";
@@ -132,7 +131,7 @@ const Upload = () => {
   };
 
   const handleLogin = () => {
-    navigation.navigate("LoginPage");
+    navigation.navigate("UserStack", { screen: 'Login'});
   };
 
   if (selectedImage !== null) {
@@ -301,7 +300,8 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: "90%",
     height: 500,
-    resizeMode: "contain",
+    resizeMode: "cover",
+    borderRadius: 20,
   },
   optionsContainer: {
     width: "100%",

@@ -19,7 +19,7 @@ export default function UserMenu({ route }) {
   const { achievement } = route?.params || {};
   const [username, setUsername] = useState("");
   const [modalVisible, setModalVisible] = useState(
-    achievement > 0 ? true : false
+    achievement === 1 ? true : false
   );
   
   // refresh screen on every load
