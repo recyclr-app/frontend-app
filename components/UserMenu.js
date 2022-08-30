@@ -41,7 +41,7 @@ export default function UserMenu({ route }) {
         if (fetchStorage) {
           setUsername(JSON.parse(fetchStorage).firstname);
         } else {
-          setUserName("");
+          setUsername("");
         }
       } catch (err) {
         console.log(err);
