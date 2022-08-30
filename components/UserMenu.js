@@ -14,6 +14,7 @@ import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AchievementModal from "./AchievementModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
 export default function UserMenu({ route }) {
   const navigation = useNavigation();
   const { achievement } = route?.params || {};
@@ -21,7 +22,7 @@ export default function UserMenu({ route }) {
   const [modalVisible, setModalVisible] = useState(
     achievement === 1 ? true : false
   );
-  
+
   // refresh screen on every load
   const isFocused = useIsFocused();
   useEffect(() => {}, [isFocused])
