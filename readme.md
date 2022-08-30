@@ -48,7 +48,45 @@ Recyclr is a native iOS app that empowers users to contribute to sustainability.
 
 ### Product Webpage
 
+<a href="https://user-images.githubusercontent.com/20288105/187325365-6fe9f5e1-d04b-47e7-93db-df3bbf9f15e4.png" target="_blank">
 <img src="https://user-images.githubusercontent.com/20288105/187325365-6fe9f5e1-d04b-47e7-93db-df3bbf9f15e4.png" width="600" alt="product image"></img>
+</a>
+
+## Planning
+
+### Wireframe
+<a href="https://user-images.githubusercontent.com/20288105/187325864-5800b834-a69e-4178-91ba-a79b85dab60c.png" target="_blank">
+  <img src="https://user-images.githubusercontent.com/20288105/187325864-5800b834-a69e-4178-91ba-a79b85dab60c.png" width="600" alt="product image"></img>
+</a>
+
+### User Stores, MVP, & Stretch Goals
+
+#### User Stores
+- Tell other people and share how I have been eco-conscious 
+- To identify if an item is recyclable or not
+- Upload a photo and the app will tell you if it is likely recyclable or trash
+- Simple game for recycle/not-recycle (API)
+- Store uploaded images for use history
+- Want a reward system (stars/leafs etc)
+
+#### MVP
+- Users badges
+- Simple Game
+- Object detection and recommendation
+- Cross-platform RN and web app.
+	
+#### Stretch Goals
+- Save badges in User Auth and be able to share on social media
+- ThreeJS something
+- Really good Game
+
+#### ERD and Component Hierachy
+
+<a href="https://user-images.githubusercontent.com/20288105/187326613-f12207be-1b7f-4a7e-8bb5-f1630cf082f2.png" target="_blank">
+  <img src="https://user-images.githubusercontent.com/20288105/187326613-f12207be-1b7f-4a7e-8bb5-f1630cf082f2.png" width="600" alt="product image"></img>
+</a>
+
+
 
 
 
