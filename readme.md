@@ -86,7 +86,15 @@ Recyclr is a native iOS app that empowers users to contribute to sustainability.
   <img src="https://user-images.githubusercontent.com/20288105/187326613-f12207be-1b7f-4a7e-8bb5-f1630cf082f2.png" width="600" alt="product image"></img>
 </a>
 
+#### Project Planning and Execution
 
+- Completed with daily standups and checking
+- Week long sprint
+- Cohesive workflow utilizing kaban board
+
+<a href="https://user-images.githubusercontent.com/20288105/187327039-6b9eceb4-f824-4f70-9d4f-9e1d39106600.png" target="_blank">
+  <img src="https://user-images.githubusercontent.com/20288105/187327039-6b9eceb4-f824-4f70-9d4f-9e1d39106600.png" width="600" alt="product image"></img>
+</a>
 
 
 
