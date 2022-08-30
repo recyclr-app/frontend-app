@@ -1,10 +1,10 @@
+<img src="https://user-images.githubusercontent.com/20288105/187325656-3379e77c-c226-4203-8df4-aac6b7d7ce71.png" width="150" alt="product image"></img>
 # recyclr iOS app
 
 ### Learn how reducing, reusing, and recycling can help you, your community, and the environment by saving money, energy, and natural resources.
 
+![promo-resized](https://user-images.githubusercontent.com/104602440/187334165-38e13460-4f2e-4fe8-b8dd-37f1abfa7700.jpg)
 
-
-<img src="https://user-images.githubusercontent.com/20288105/187325656-3379e77c-c226-4203-8df4-aac6b7d7ce71.png" width="150" alt="product image"></img>
 
 ## Project Description
 
