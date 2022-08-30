@@ -50,9 +50,9 @@ const Login = () => {
 
   return (
     <>
-    <Image source={require('../assets/icons/appname.png')} style={styles.appName} />
+      <Image source={require('../assets/icons/appname.png')} style={styles.appName} />
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <View style={styles.inputContainer}>
+        <View style={styles.inputContainer}>
         <TextInput
           placeholder="email"
           value={user.email}
@@ -99,6 +99,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    alignSelf: 'center',
+    backgroundColor: '#D0F2E2',
+    width: '85%',
+    marginBottom: 150,
+    borderRadius: 20,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
   },
   inputContainer: {
     width: "70%",
