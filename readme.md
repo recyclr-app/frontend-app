@@ -52,7 +52,8 @@ Visit the product and and demo it at <a href="https://recyclr.netlify.com/">http
 
 ### iOS Demo
 <img src="https://user-images.githubusercontent.com/20288105/187338937-4da06bf2-8a04-4607-9d83-11593bd2dae5.gif" width="200" alt="product image"></img>
-<img src="https://user-images.githubusercontent.com/20288105/187341867-0d358022-1cc6-4c45-b646-9820f06e666e.gif" width="200" alt="product image"></img>
+<img src="https://user-images.githubusercontent.com/20288105/187342279-4ddecf13-2a6d-47bd-9b3a-6456518a37ff.gif" width="200" alt="product image"></img>
+
 
 
 ### Product Webpage
