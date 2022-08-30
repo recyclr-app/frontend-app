@@ -54,11 +54,10 @@ Visit the product and and demo it at <a href="https://recyclr.netlify.com/">http
 <img src="https://user-images.githubusercontent.com/20288105/187342279-4ddecf13-2a6d-47bd-9b3a-6456518a37ff.gif" width="200" alt="product image"></img>
 
 
-
 ### Product Webpage
 
-<a href="https://user-images.githubusercontent.com/20288105/187325365-6fe9f5e1-d04b-47e7-93db-df3bbf9f15e4.png" target="_blank">
-<img src="https://user-images.githubusercontent.com/20288105/187325365-6fe9f5e1-d04b-47e7-93db-df3bbf9f15e4.png" width="600" alt="product image"></img>
+<a href="https://user-images.githubusercontent.com/20288105/187496752-4ce859d6-ae93-494f-a00c-060f4561fde6.png" target="_blank">
+<img src="https://user-images.githubusercontent.com/20288105/187496752-4ce859d6-ae93-494f-a00c-060f4561fde6.png" width="600" alt="product image"></img>
 </a>
 
 ## Planning
