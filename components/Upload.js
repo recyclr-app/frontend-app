@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { colors } from "../globalstyles";
+import { getCV } from "./api/cvAPI";
 
 const Upload = () => {
   const navigation = useNavigation();
@@ -39,7 +40,7 @@ const Upload = () => {
   }, []);
 
   //send data from userphoto to backend
-  const createHistory = async (cvData) => {
+  const createHistory = (cvData) => {
     try {
       axios.post(
         "https://relievedmint.herokuapp.com/history",
@@ -100,22 +101,7 @@ const Upload = () => {
       name: pickerResult.fileName,
     });
     //send image data to cv api
-    try {
-      const response = await axios.post(
-        "https://relievedmint.herokuapp.com/cv",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-
-      setCvResults(response.data);
-
-      //upload to userhistory if logged in
-      localData.token !== "" && createHistory(response.data);
-    } catch (err) {
-      console.log(err);
-    }
+    await getCV(formData, setCvResults, localData, createHistory);
 
     setSelectedImage({ localUri: resizedImage.uri });
   };
@@ -131,7 +117,7 @@ const Upload = () => {
   };
 
   const handleLogin = () => {
-    navigation.navigate("UserStack", { screen: 'Login'});
+    navigation.navigate("UserStack", { screen: "Login" });
   };
 
   if (selectedImage !== null) {

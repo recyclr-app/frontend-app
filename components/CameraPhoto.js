@@ -15,6 +15,7 @@ import { Camera, CameraType, FlashMode } from "expo-camera";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getCV } from "./api/cvAPI";
 
 export default function CameraPhoto() {
   const navigation = useNavigation();
@@ -91,20 +92,9 @@ export default function CameraPhoto() {
           name: resizedImage.uri,
         });
 
-        try {
-          const response = await axios.post(
-            "https://relievedmint.herokuapp.com/cv",
-            formData,
-            {
-              headers: { "Content-Type": "multipart/form-data" },
-            }
-          );
-          setCvResults(response.data);
-          // upload to userhistory if logged in
-          localData.token !== "" && createHistory(response.data);
-        } catch (err) {
-          console.log(err);
-        }
+        //CV API
+        await getCV(formData, setCvResults, localData, createHistory);
+
         setCameraImage(data.uri);
       } catch (err) {
         console.log(err);
