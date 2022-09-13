@@ -14,22 +14,16 @@ import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AchievementModal from "./AchievementModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
 export default function UserMenu({ route }) {
   const navigation = useNavigation();
   const { achievement } = route.params || {};
   const [username, setUsername] = useState("");
-  // const [modalVisible, setModalVisible] = useState(
-  //   achievement === 1 ? true : false
-  // );
-  const [modalVisible, setModalVisible] = useState(false);
 
-  function handleAchievements() {
-    if (achievement) {
-      setModalVisible(true);
-    }
-  }
+  const [modalVisible, setModalVisible] = useState(
+    achievement === 1 ? true : false
+  );
 
-  useEffect(() => handleAchievements(), []);
 
   // refresh screen on every load
   const isFocused = useIsFocused();
@@ -50,7 +44,7 @@ export default function UserMenu({ route }) {
         if (fetchStorage) {
           setUsername(JSON.parse(fetchStorage).firstname);
         } else {
-          setUserName("");
+          setUsername("");
         }
       } catch (err) {
         console.log(err);

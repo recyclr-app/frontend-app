@@ -10,8 +10,7 @@ export default function Results({ route }) {
 
   const recycleIt = () => {
     setAchievement(prev => ++prev)
-    console.log(achievement)
-    navigation.navigate('UserStack', { screen: 'UserMenu', achievement: achievement })
+    navigation.navigate('UserStack', { screen: 'UserMenu', params: {achievement : achievement} })
   }
   
   const trashIt = () => {
