@@ -16,17 +16,26 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function UserMenu({ route }) {
   const navigation = useNavigation();
-  const { achievement } = route?.params || {};
+  const { achievement } = route.params || {};
   const [username, setUsername] = useState("");
-  const [modalVisible, setModalVisible] = useState(
-    achievement === 1 ? true : false
-  );
-  
+  // const [modalVisible, setModalVisible] = useState(
+  //   achievement === 1 ? true : false
+  // );
+  const [modalVisible, setModalVisible] = useState(false);
+
+  function handleAchievements() {
+    if (achievement) {
+      setModalVisible(true);
+    }
+  }
+
+  useEffect(() => handleAchievements(), []);
+
   // refresh screen on every load
   const isFocused = useIsFocused();
-  useEffect(() => {}, [isFocused])
+  useEffect(() => {}, [isFocused]);
 
-  const handlePress = (component) => {;
+  const handlePress = (component) => {
     navigation.navigate(component);
   };
 
